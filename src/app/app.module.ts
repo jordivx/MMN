@@ -7,20 +7,28 @@ import { NumberComponent } from './number/number.component';
 import { CodeComponent } from './code/code.component';
 import { CodeService } from './code.service';
 import { AppRoutingModule } from './/app-routing.module';
+import { GameComponent } from './game/game.component';
+import { GameListComponent } from './game-list/game-list.component';
+import { UserComponent } from './user/user.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     NumberComponent,
-    CodeComponent
+    CodeComponent,
+    GameComponent,
+    GameListComponent,
+    UserComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule
   ],
   providers: [
-    CodeService
+    CodeService,
   ],
   bootstrap: [
     AppComponent

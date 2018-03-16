@@ -7,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NumberComponent implements OnInit {
 
+  private value:number;
+
   constructor() { }
 
   ngOnInit() {
