@@ -1,4 +1,8 @@
-<p>
-  <app-number></app-number>
-  <app-number></app-number>
-</p>
+a {{values}}
+<table class="codeTable">
+  <tr>
+    <td *ngFor="let value of values">
+      <app-number value="{{value.value}}"></app-number>
+    </td>
+  </tr>
+</table>

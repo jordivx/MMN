@@ -1,17 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-number',
   templateUrl: './number.component.html',
-  styleUrls: ['./number.component.css']
+  styleUrls: ['./number.component.css'],
 })
 export class NumberComponent implements OnInit {
-
-  private value:number;
-
+  
+  @Input() public value:number;
   constructor() { }
 
   ngOnInit() {
+  }
+
+  setValue(_value:number) {
+    this.value=_value;
+  }
+
+  newNumberComponent(_value:number) {
+    this.value=_value;
+    return this;
   }
 
 }

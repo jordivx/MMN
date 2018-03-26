@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { NumberComponent } from '../number/number.component';
 import { UserComponent } from '../user/user.component';
 
@@ -9,13 +9,34 @@ import { UserComponent } from '../user/user.component';
 })
 export class CodeComponent implements OnInit {
 
-  private values:NumberComponent[];
+  @Input() public values:NumberComponent[];
   private user:UserComponent;
   private date:Date;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
+  }
+
+  newCodeComponent(_values:NumberComponent[],_user:UserComponent,_date:Date) {
+    this.values = _values;
+    this.user = _user;
+    this.date = _date;
+  }
+
+  getValues() {
+    return this.values;
+  }
+
+  setValues(_values:NumberComponent[]) {
+    this.values = _values;
+  }
+
+  addValue(_value:NumberComponent) {
+    if(!this.values){
+      this.values=new Array<NumberComponent>();
+    }
+    this.values.push(_value);
   }
 
 }

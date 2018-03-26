@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CodeComponent } from '../code/code.component';
 import { UserComponent } from '../user/user.component';
+import { NumberComponent } from '../number/number.component';
 
 @Component({
   selector: 'app-game',
@@ -9,7 +10,7 @@ import { UserComponent } from '../user/user.component';
 })
 export class GameComponent implements OnInit {
 
-  private codes:CodeComponent[];
+  @Input() public codes:CodeComponent[];
   private user1:UserComponent;
   private user2:UserComponent;
   private startDate:Date;
@@ -18,6 +19,18 @@ export class GameComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    this.codes = [];
+    this.newCode([1,2,3]);
+  }
+
+  newCode(values:number[]) {
+    let newCode = new CodeComponent();
+    values.forEach(value => {
+      let newNumberComponent = new NumberComponent();
+      newNumberComponent.setValue(value);
+      newCode.addValue(newNumberComponent)
+    });
+    this.codes.push(newCode);
   }
 
 }

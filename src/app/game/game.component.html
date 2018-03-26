@@ -1,3 +1,7 @@
-<p>
-  game works!
-</p>
+<table class="codesTable">
+  <tr>
+    <td *ngFor="let code of codes">
+      <app-code values="{{code.values}}"></app-code>
+    </td>
+  </tr>
+</table>
