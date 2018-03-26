@@ -10,6 +10,7 @@ import { UserComponent } from '../user/user.component';
 export class CodeComponent implements OnInit {
 
   @Input() public values:NumberComponent[];
+  public codeValues:NumberComponent[]=new Array<NumberComponent>();
   private user:UserComponent;
   private date:Date;
 
@@ -37,6 +38,7 @@ export class CodeComponent implements OnInit {
       this.values=new Array<NumberComponent>();
     }
     this.values.push(_value);
+    this.codeValues = this.values;
   }
 
 }

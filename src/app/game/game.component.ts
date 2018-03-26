@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { CodeComponent } from '../code/code.component';
 import { UserComponent } from '../user/user.component';
 import { NumberComponent } from '../number/number.component';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-game',
@@ -15,12 +16,38 @@ export class GameComponent implements OnInit {
   private user2:UserComponent;
   private startDate:Date;
   private finishDate:Date;
+  private codesLengthArray:Array<Number>;
 
-  constructor() { }
+  inputCodeForm: FormGroup;
+
+  constructor(private _formBuild: FormBuilder) { }
 
   ngOnInit() {
     this.codes = [];
+    this.codesLengthArray=[1,2,3,4,5];
     this.newCode([1,2,3]);
+    this.inputCodeForm = this._formBuild.group({
+      inputNumbers: this._formBuild.array(
+        this.addNInputFields()
+      )
+    });
+  }
+
+  /** 
+   * Function that adds as many formGroups to the formArray as characters has the code.
+   * The "codesLengthArray" is defined to know which is the length of the codes of this 
+   * session.
+  */
+  addNInputFields() {
+    let inputFieldsArray = new Array();
+    for(let i=0;i<this.codesLengthArray.length;i++){
+      inputFieldsArray.push(
+        this._formBuild.group({
+          inputNumber: ['']
+        })
+      );
+    }
+    return inputFieldsArray;
   }
 
   newCode(values:number[]) {
@@ -32,5 +59,12 @@ export class GameComponent implements OnInit {
     });
     this.codes.push(newCode);
   }
-
+  
+  submitNewCode(){
+    let codeValues = new Array();
+    this.inputCodeForm.value.inputNumbers.forEach(inputNumbers=>{
+      codeValues.push(inputNumbers.inputNumber);
+    });
+    this.newCode(codeValues);
+  }
 }
