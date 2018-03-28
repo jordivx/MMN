@@ -6,7 +6,7 @@
           <input type="number" formControlName="inputNumber" class="numberInput" appLimitedCharacters="1">
       </td>
       <td>
-        <button class="btn-change">NEW CODE</button>
+        <button class="btn-change">{{ 'New Code' | translate | uppercase }}</button>
       </td>
     </tr>
   </table>
@@ -18,9 +18,9 @@
     <th>
       <table class="codesTable">
         <tr>
-          <td width="25%">Correct</td>
-          <td width="25%">Wrong</td>
-          <td width="50%">CODES</td>
+          <td width="25%">{{ 'Correct' | translate }}</td>
+          <td width="25%">{{ 'Wrong' | translate }}</td>
+          <td width="50%">{{ 'Codes' | translate | uppercase }}</td>
         </tr>
       </table>
     </th>

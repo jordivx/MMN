@@ -48,6 +48,10 @@ export class SettingsComponent implements OnInit {
     this.codeLength++;
   }
 
+  switchLanguage(language: string) {
+    this.settingsService.switchLanguage(language);
+  }
+
   applySettings(){
     this.setServiceCodeLength();
   }

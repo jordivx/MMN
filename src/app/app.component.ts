@@ -9,7 +9,7 @@ import { SettingsService } from './settings.service';
 export class AppComponent {
   title = 'MMN';
 
-  constructor(public settingsService: SettingsService){
+  constructor(public settingsService: SettingsService) {
     settingsService.setCodeLength(5); // By default the codeLength will be 5
   }
 }

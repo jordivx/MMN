@@ -1,6 +1,6 @@
 <div class="codeLengthSettings" align="center">
-  <p>
-    CODE LENGTH
+  <p class="settingsTitle">
+    {{ 'Codes Length' | translate | uppercase }}
   </p>
   <table>
     <tr>
@@ -18,7 +18,13 @@
     </tr>
   </table>
 </div>
-
+<div class="languageSettings" align="center">
+  <p class="settingsTitle">
+    {{ 'Language' | translate | uppercase }}
+  </p>
+  <button (click)="switchLanguage('en')" class="languageButton english" style="margin-right:2em;"></button>
+  <button (click)="switchLanguage('es')" class="languageButton spanish"></button>
+</div>
 <div class="applySettings" align="center">
-  <button (click)="applySettings()">APPLY</button>
+  <button (click)="applySettings()" class="btn btn-dark">{{ 'Apply' | translate | uppercase }}</button>
 </div>
