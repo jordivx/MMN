@@ -1,8 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ElementRef } from '@angular/core';
 import { CodeComponent } from '../code/code.component';
 import { UserComponent } from '../user/user.component';
 import { NumberComponent } from '../number/number.component';
 import { FormGroup, FormBuilder } from '@angular/forms';
+import { SettingsService } from '../settings.service';
 
 @Component({
   selector: 'app-game',
@@ -20,11 +21,11 @@ export class GameComponent implements OnInit {
 
   inputCodeForm: FormGroup;
 
-  constructor(private _formBuild: FormBuilder) { }
+  constructor(private _formBuild: FormBuilder, private settingsService: SettingsService) { }
 
   ngOnInit() {
     this.codes = [];
-    this.codesLengthArray=[1,2,3,4,5];
+    this.codesLengthArray=Array.apply( 0, { length: this.settingsService.getCodeLength() } );
     this.newCode([1,2,3]);
     this.inputCodeForm = this._formBuild.group({
       inputNumbers: this._formBuild.array(
@@ -66,5 +67,19 @@ export class GameComponent implements OnInit {
       codeValues.push(inputNumbers.inputNumber);
     });
     this.newCode(codeValues);
+  }
+
+  checkLength(maxLen:number,ele:ElementRef){
+    console.log(maxLen);
+    let fieldLength = ele.nativeElement.value.length;
+    if(fieldLength <= maxLen){
+        return true;
+    }
+    else
+    {
+      let str = ele.nativeElement.value;
+      str = str.substring(0, str.length - 1);
+      ele.nativeElement.value = str;
+    }
   }
 }

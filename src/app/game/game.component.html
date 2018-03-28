@@ -1,14 +1,16 @@
 <form [formGroup]="inputCodeForm" (ngSubmit)="submitNewCode()">
-<table class="inputTable" formArrayName="inputNumbers">
-  <tr>
-    <td *ngFor="let numberInput of codesLengthArray; let i = index" [formGroupName]="i">
-        <input type="number" formControlName="inputNumber">
-    </td>
-    <td>
-      <button class="btn-change">NEW CODE</button>
-    </td>
-  </tr>
-</table>
+<div align="center">
+  <table class="inputTable" formArrayName="inputNumbers">
+    <tr>
+      <td *ngFor="let codeNumber of codesLengthArray; let i = index" [formGroupName]="i">
+          <input type="number" formControlName="inputNumber" class="numberInput" appLimitedCharacters="1">
+      </td>
+      <td>
+        <button class="btn-change">NEW CODE</button>
+      </td>
+    </tr>
+  </table>
+  </div>
 </form>
 
 <table class="codesTable">
@@ -16,9 +18,9 @@
     <th>
       <table class="codesTable">
         <tr>
-          <td width="50%">CODES</td>
           <td width="25%">Correct</td>
           <td width="25%">Wrong</td>
+          <td width="50%">CODES</td>
         </tr>
       </table>
     </th>

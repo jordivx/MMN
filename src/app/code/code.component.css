@@ -1,4 +1,8 @@
 .codeTable{
-    width:50%;
-    margin-left:25%;
+    width:100%;
+}
+
+.middleColumn {
+    border-left: 1px solid black;
+    border-right: 1px solid black;
 }

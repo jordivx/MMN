@@ -1,0 +1,24 @@
+<div class="codeLengthSettings" align="center">
+  <p>
+    CODE LENGTH
+  </p>
+  <table>
+    <tr>
+      <td style="padding-right:1em;">
+        <button class="quantityButton minus-button" (click)="decreaseCodeLength()" [disabled]="disableMinusButton()"></button>
+      </td>
+      <td>
+        <div class="numberInput">
+          {{codeLength}}
+        </div>
+      </td>
+      <td style="padding-left:1em;">
+        <button class="quantityButton plus-button" (click)="increaseCodeLength()" [disabled]="disablePlusButton()"></button>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="applySettings" align="center">
+  <button (click)="applySettings()">APPLY</button>
+</div>

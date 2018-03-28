@@ -12,6 +12,10 @@ import { GameComponent } from './game/game.component';
 import { GameListComponent } from './game-list/game-list.component';
 import { UserComponent } from './user/user.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { LimitedCharactersDirective } from './limited-characters.directive';
+import { SettingsComponent } from './settings/settings.component';
+import { SettingsService } from './settings.service';
+import { HomeComponent } from './home/home.component';
 
 
 @NgModule({
@@ -22,7 +26,10 @@ import { NavbarComponent } from './navbar/navbar.component';
     GameComponent,
     GameListComponent,
     UserComponent,
-    NavbarComponent
+    NavbarComponent,
+    LimitedCharactersDirective,
+    SettingsComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -32,6 +39,7 @@ import { NavbarComponent } from './navbar/navbar.component';
   ],
   providers: [
     CodeService,
+    SettingsService
   ],
   bootstrap: [
     AppComponent
