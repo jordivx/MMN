@@ -26,7 +26,6 @@ export class GameComponent implements OnInit {
   ngOnInit() {
     this.codes = [];
     this.codesLengthArray=Array.apply( 0, { length: this.settingsService.getCodeLength() } );
-    this.newCode([1,2,3]);
     this.inputCodeForm = this._formBuild.group({
       inputNumbers: this._formBuild.array(
         this.addNInputFields()

@@ -17,12 +17,16 @@ import { UserComponent } from './user/user.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SettingsComponent } from './settings/settings.component';
 import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 
 import { SettingsService } from './settings.service';
+import { UserService } from './user.service';
 
 
 import { LimitedCharactersDirective } from './limited-characters.directive';
+import { AuthGuard } from './auth.guard';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -39,7 +43,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     NavbarComponent,
     LimitedCharactersDirective,
     SettingsComponent,
-    HomeComponent
+    HomeComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -57,7 +63,9 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   providers: [
     CodeService,
-    SettingsService
+    SettingsService,
+    UserService,
+    AuthGuard
   ],
   bootstrap: [
     AppComponent
