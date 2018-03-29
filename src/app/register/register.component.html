@@ -1,3 +1,14 @@
-<p>
-  register works!
-</p>
+<form class="p-4" (submit)="registerUser()">
+  <div style="margin-bottom:1em;">
+    <input type="text" name="username" [(ngModel)]="username" placeholder="{{ 'Username' | translate }}">
+  </div>
+  <div style="margin-bottom:1em;">
+    <input type="password" name="password" [(ngModel)]="password" placeholder="{{ 'Password' | translate }}">
+  </div>
+  <button type="submit" class="btn btn-primary">{{ 'Register' | translate | uppercase }}</button>
+</form>
+
+<div class="languageSwitch" align="center">
+  <button (click)="switchLanguage('en')" class="languageButton english" style="margin-right:2em;"></button>
+  <button (click)="switchLanguage('es')" class="languageButton spanish"></button>
+</div>

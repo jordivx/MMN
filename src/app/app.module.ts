@@ -5,6 +5,8 @@ import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppRoutingModule } from './/app-routing.module';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuthModule } from 'angularfire2/auth';
 
 
 import { AppComponent } from './app.component';
@@ -30,6 +32,15 @@ import { AuthGuard } from './auth.guard';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
+}
+
+const firebaseAuth = {
+  apiKey: "AIzaSyDyYOONbKe-rfjVHxGTYZmvq5tajEUUeKw",
+  authDomain: "mmnfirebase.firebaseapp.com",
+  databaseURL: "https://mmnfirebase.firebaseio.com",
+  projectId: "mmnfirebase",
+  storageBucket: "mmnfirebase.appspot.com",
+  messagingSenderId: "146888784036"
 }
 
 @NgModule({
@@ -59,7 +70,9 @@ export function HttpLoaderFactory(http: HttpClient) {
         useFactory: HttpLoaderFactory,
         deps: [HttpClient]
       }
-    })
+    }),
+    AngularFireModule.initializeApp(firebaseAuth),
+    AngularFireAuthModule
   ],
   providers: [
     CodeService,

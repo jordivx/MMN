@@ -1,0 +1,23 @@
+.languageSwitch{
+    background-color: #343a40;
+    padding: 0.5em 0;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.languageButton{
+    width:64px;
+    height:32px;
+    border: 1px solid white;
+    cursor: pointer;
+}
+
+.spanish {
+	background: -webkit-linear-gradient(top, red 25%, yellow 25%, yellow 75%, red 75%);
+	background: linear-gradient(to bottom, red 25%, yellow 25%, yellow 75%, red 75%);
+}
+
+.english {
+    background: url(../../assets/flags/united-kingdom-flag.png);
+}
