@@ -29,6 +29,7 @@ import { UserService } from './user.service';
 
 import { LimitedCharactersDirective } from './limited-characters.directive';
 import { AuthGuard } from './auth.guard';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -72,7 +73,8 @@ const firebaseAuth = {
       }
     }),
     AngularFireModule.initializeApp(firebaseAuth),
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AngularFireDatabaseModule
   ],
   providers: [
     CodeService,

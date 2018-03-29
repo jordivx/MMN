@@ -12,5 +12,11 @@
     "Username": "Username",
     "Password": "Password",
     "Log In": "Log In",
-    "Register": "Register"
+    "Register": "Register",
+    "My Games": "My Games",
+    "Free Games": "Free Games",
+    "User1": "Player 1",
+    "User2": "Player 2",
+    "Actions": "Actions",
+    "Play": "Play"
 }

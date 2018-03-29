@@ -1,0 +1,13 @@
+.myGamesList{
+    margin-top:1em;
+}
+
+.freeGamesList{
+    margin-top:1em;
+}
+
+.sectionTitle{
+    background-color: #343a40;
+    color:white;
+    padding:.75rem
+}

@@ -42,4 +42,7 @@ export class UserService {
     });
   }
 
+  getUsername(){
+    return this.username;
+  }
 }

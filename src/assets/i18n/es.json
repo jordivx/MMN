@@ -12,5 +12,11 @@
     "Username": "Usuario",
     "Password": "Contraseña",
     "Log In": "Iniciar Sesión",
-    "Register": "Registrarse"
+    "Register": "Registrarse",
+    "My Games": "Mis Partidas",
+    "Free Games": "Partidas Libres",
+    "User1": "Jugador 1",
+    "User2": "Jugador 2",
+    "Actions": "Acciones",
+    "Play": "Jugar"
 }

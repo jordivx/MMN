@@ -1,3 +1,43 @@
 <div>
-  <input type="button" routerLink="/game" value="{{ 'New Game' | translate | uppercase}}"/>
+    <button (click)="newGame()" class="btn btn-primary" style="margin-bottom:1em">
+      {{ 'New Game' | translate | uppercase }}
+    </button>
+</div>
+<div class="myGamesList">
+  <div class="sectionTitle">{{ 'My Games' | translate | uppercase}}</div>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">{{ 'User1' | translate | uppercase}}</th>
+        <th scope="col">{{ 'User2' | translate | uppercase}}</th>
+        <th scope="col">{{ 'Actions' | translate | uppercase}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let myGame of myGamesListData" class="game" (click)="openGame()">
+        <td>{{myGame.user1}}</td>
+        <td>{{myGame.user2}}</td>
+        <td>{{ 'Play' | translate | uppercase}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="freeGamesList">
+  <div class="sectionTitle">{{ 'Free Games' | translate | uppercase}}</div>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">{{ 'User1' | translate | uppercase}}</th>
+        <th scope="col">{{ 'User2' | translate | uppercase}}</th>
+        <th scope="col">{{ 'Actions' | translate | uppercase}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let myGame of freeGamesListData" class="game" (click)="openGame()">
+        <td>{{myGame.user1}}</td>
+        <td>{{myGame.user2}}</td>
+        <td>{{ 'Play' | translate | uppercase}}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
