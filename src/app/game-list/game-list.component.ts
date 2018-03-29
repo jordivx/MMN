@@ -1,12 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { GameComponent } from '../game/game.component';
-import { UserComponent } from '../user/user.component';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Router } from '@angular/router';
-import { SettingsService } from '../settings.service';
-import { UserService } from '../user.service';
+import { FirebaseOperation } from 'angularfire2/database/interfaces';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
+
+import { GameComponent } from '../game/game.component';
+import { UserComponent } from '../user/user.component';
+
+import { SettingsService } from '../settings.service';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-game-list',
@@ -15,54 +18,103 @@ import 'rxjs/add/operator/map';
 })
 export class GameListComponent implements OnInit {
 
+  // Variable declarations
   private gameList:GameComponent[];
   private user1:UserComponent;
   private user2:UserComponent;
-
   private gameListSubscription;
   private gameListData: object[] = [];
   private myGamesListData: object[] = [];
   private freeGamesListData: object[] = [];
 
+  /*
+  * Constructor for the game list component
+  */
   constructor(private db: AngularFireDatabase,
     private router:Router,
     public settingsService: SettingsService,
     private user:UserService) {
-    this.gameListSubscription = this.db.list('/games').valueChanges().subscribe(
+    
+    //Get the games from the database
+    this.gameListSubscription = this.db.list('/games').snapshotChanges().subscribe(
       data => {
-        this.gameListData = data;
-        this.myGamesListData = data.filter(
+        //Map the objects to have the uid and the data
+        data.map(fireGameObject => {
+          let objectData = fireGameObject.payload.val();
+          let objectId = fireGameObject.payload.key;
+          this.gameListData.push({
+            id: objectId,
+            codes: objectData.codes,
+            user1: objectData.user1,
+            user2: objectData.user2,
+            startDate: objectData.startDate,
+            editDate: objectData.editDate,
+            finishDate: objectData.finishDate,
+            codesLength: objectData.codesLength
+          });
+        });
+        // Filter the results by the current user to have the games associated with it.
+        this.myGamesListData = this.gameListData.filter(
           (game:any) => 
             game.user1===this.user.getUsername() || 
             game.user2===this.user.getUsername()
         );
-        this.freeGamesListData = data.filter(
+        //Sort "My Games List" by edit time to have the latest on the top
+        this.myGamesListData.sort((a: any, b: any) => 
+          new Date(b.editDate).getTime() - new Date(a.editDate).getTime()
+        )
+        // Filter the results not associated with the current user and with some empty place
+        this.freeGamesListData = this.gameListData.filter(
           (game:any) => 
             (game.user1==="" || game.user2==="") && 
             game.user1!=this.user.getUsername() && 
             game.user2!=this.user.getUsername()
         );
+        //Sort "Free Games List"  by edit time to have the latest on the top
+        this.freeGamesListData.sort((a: any, b: any) => 
+          new Date(b.editDate).getTime() - new Date(a.editDate).getTime()
+        )
       }
     );
-    console.log(this.gameListSubscription);
   }
 
   ngOnInit() {
   }
 
   newGame() {
-    this.db.list('/games').push({
+    let newGameObject = this.db.list('/games').push({
       codes: '',
       user1: this.user.getUsername(),
       user2: '',
+      user1Code: '',
+      user2Code: '',
       startDate: new Date().toISOString(),
+      editDate: new Date().toISOString(),
       finishDate: '',
-      codesLengthArray:this.settingsService.getCodeLength()
-    }).then( () => {/*Game pushed into DB*/});
-    this.router.navigate(['/game']);
+      codesLength:this.settingsService.getCodeLength()
+    }).then( data => {
+      this.router.navigate(['/game',data.key]);
+    });
   }
 
-  openGame() {
-    
+  openGame(gameId:string) {
+    this.router.navigate(['/game',gameId]);
+  }
+
+  joinGame(game:any) {
+    let gameId = game.id;
+    let newData={
+      codes: game.codes,
+      user1: game.user1,
+      user2: this.user.getUsername(),
+      user1Code: game.user1code,
+      user2Code: '',
+      startDate: game.startDate,
+      editDate: new Date().toISOString(),
+      finishDate: '',
+      codesLength:game.codesLength
+    };
+    this.db.list('/games').set(gameId,newData);
+    this.router.navigate(['/game',gameId]);
   }
 }

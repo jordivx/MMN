@@ -29,6 +29,14 @@ export class CodeComponent implements OnInit {
     return this.values;
   }
 
+  getStringValue() {
+    let stringValue:string = "";
+    this.values.forEach(value=>{
+      stringValue=stringValue.concat(value.getValue().toString());
+    })
+    return stringValue;
+  }
+
   setValues(_values:NumberComponent[]) {
     this.values = _values;
   }

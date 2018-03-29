@@ -17,6 +17,10 @@ export class NumberComponent implements OnInit {
     this.value=_value;
   }
 
+  getValue() {
+    return this.value;
+  }
+
   newNumberComponent(_value:number) {
     this.value=_value;
     return this;
