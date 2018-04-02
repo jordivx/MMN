@@ -18,5 +18,8 @@
     "User1": "Jugador 1",
     "User2": "Jugador 2",
     "Actions": "Acciones",
-    "Play": "Jugar"
+    "Play": "Jugar",
+    "Waiting Turn": "Esperando al oponente",
+    "My Codes": "Mis Códigos",
+    "Opponent Codes": "Códigos del Oponente"
 }

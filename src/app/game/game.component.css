@@ -10,6 +10,25 @@
     margin-left:1em;
 }
 
+.swapCodesList {
+    width:100%;
+    margin-bottom: 2em;
+}
+
+.swapCodesList td {
+    width:50%;
+    height:50px;
+    background-color:#343a40;
+    color:#fff;
+    font-weight: normal;
+    cursor: pointer;
+}
+
+.codesListSelected {
+    background-color:#007bff!important;
+    font-weight: bold!important;
+    font-size:125%;
+}
 
 .numberInput {
     width: 50px;

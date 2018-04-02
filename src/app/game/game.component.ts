@@ -17,6 +17,8 @@ export class GameComponent implements OnInit {
 
   private id:string;
   @Input() public codes:CodeComponent[];
+  private myCodes:CodeComponent[];
+  private opponentCodes:CodeComponent[];
   private user1:UserComponent;
   private user2:UserComponent;
   private user1Code:number[];
@@ -27,6 +29,8 @@ export class GameComponent implements OnInit {
   private codesLength:number;
   private codesLengthArray:Array<Number>;
   private gameSubscription;
+  private myTurn:boolean;
+  private seeMyCodes:boolean=true;
 
   inputCodeForm: FormGroup;
 
@@ -176,7 +180,9 @@ export class GameComponent implements OnInit {
 
           correctNumbers = code.correct;
           wrongNumbers = code.wrong;
-          codeUser = new UserComponent().setUsername(code.user);
+          let userForCode = new UserComponent();
+          userForCode.setUsername(code.user);
+          codeUser = userForCode;
           codeDate = new Date(code.date);
           codeChecked = code.checked;
 
@@ -187,6 +193,25 @@ export class GameComponent implements OnInit {
           new Date(b.getDate()).getTime() - new Date(a.getDate()).getTime()
         );
         this.codes=codeArray;
+        if(this.codes.length>0) {
+          this.myTurn = (this.codes[0].getUser().getUsername() != this.user.getUsername());
+        } else {
+          this.myTurn = true;
+        }
+        this.myCodes = this.codes.filter(
+          (code:CodeComponent) => code.getUser().getUsername() == this.user.getUsername()
+        );
+        this.opponentCodes = this.codes.filter(
+          (code:CodeComponent) => code.getUser().getUsername() != this.user.getUsername()
+        );
     });
+  }
+
+  seeMyCodesTab() {
+    this.seeMyCodes=true;
+  }
+
+  seeOpponentCodesTab() {
+    this.seeMyCodes=false;
   }
 }

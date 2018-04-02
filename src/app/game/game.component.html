@@ -1,18 +1,32 @@
 <form [formGroup]="inputCodeForm" (ngSubmit)="submitNewCode()">
 <div align="center">
   <table class="inputTable" formArrayName="inputNumbers">
-    <tr>
+    <tr *ngIf="myTurn">
       <td *ngFor="let codeNumber of codesLengthArray; let i = index" [formGroupName]="i">
           <input type="number" formControlName="inputNumber" class="numberInput" appLimitedCharacters="1">
       </td>
       <td>
-        <button class="btn-change">{{ 'New Code' | translate | uppercase }}</button>
+        <button class="btn btn-primary" [disabled]="!myTurn">{{ 'New Code' | translate | uppercase }}</button>
+      </td>
+    </tr>
+    <tr *ngIf="!myTurn">
+      <td>
+        {{ 'Waiting Turn' | translate | uppercase }}...
       </td>
     </tr>
   </table>
   </div>
 </form>
-
+<table class="swapCodesList">
+  <tr>
+    <td (click)="seeMyCodesTab()" [class.codesListSelected]="seeMyCodes">
+      {{ 'My Codes' | translate | uppercase }}
+    </td>
+    <td (click)="seeOpponentCodesTab()" [class.codesListSelected]="!seeMyCodes">
+      {{ 'Opponent Codes' | translate | uppercase }}
+    </td>
+  </tr>
+</table>
 <table class="codesTable">
   <tr>
     <th>
@@ -25,7 +39,12 @@
       </table>
     </th>
   </tr>
-  <tr *ngFor="let code of codes">
+  <tr [hidden]="!seeMyCodes" *ngFor="let code of myCodes">
+    <td>
+      <app-code [values]="code.values"></app-code>
+    </td>
+  </tr>
+  <tr [hidden]="seeMyCodes" *ngFor="let code of opponentCodes">
     <td>
       <app-code [values]="code.values"></app-code>
     </td>
