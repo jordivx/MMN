@@ -15,4 +15,12 @@ export class UserComponent implements OnInit {
   ngOnInit() {
   }
 
+  getUsername() {
+    return this.username;
+  }
+
+  setUsername(_username:string) {
+    this.username = _username;
+  }
+
 }

@@ -6,6 +6,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 import { SettingsService } from '../settings.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFireDatabase } from 'angularfire2/database';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-game',
@@ -33,7 +34,8 @@ export class GameComponent implements OnInit {
     private settingsService: SettingsService,
     private route: ActivatedRoute,
     private router: Router,
-    private db: AngularFireDatabase) { 
+    private db: AngularFireDatabase,
+    private user:UserService) { 
 
       this.id = this.route.snapshot.paramMap.get('id');
       
@@ -45,7 +47,7 @@ export class GameComponent implements OnInit {
 
       this.db.object('/games/'+this.id).valueChanges().subscribe(
         (game:any) => {
-          this.codes=[];
+          this.getGameCodesById(this.id); // This function fills the this.codes variable
           this.user1=game.user1;
           this.user2=game.user2;
           this.user1Code=game.user1code;
@@ -89,20 +91,25 @@ export class GameComponent implements OnInit {
     }
     return inputFieldsArray;
   }
-
-  createNewCode(values:number[]) {
+  createNewCode(values:number[], user:UserComponent, date:Date, correct:number, wrong:number, checked:boolean) {
     let newCode = new CodeComponent();
     values.forEach(value => {
       let newNumberComponent = new NumberComponent();
       newNumberComponent.setValue(value);
       newCode.addValue(newNumberComponent)
     });
+    newCode.setUser(user);
+    newCode.setDate(date);
+    newCode.setCorrect(correct);
+    newCode.setWrong(wrong);
+    newCode.setChecked(checked);
+
     return newCode;
   }
 
   newCode(values:number[]) {
-    let newCode = this.createNewCode(values);
-    this.codes.push(newCode);
+    let newCode = this.createNewCode(values,this.user.getUsername(),new Date(),0,0,false);
+    this.addNewCodeDatabase(newCode);
   }
   
   submitNewCode(){
@@ -111,6 +118,12 @@ export class GameComponent implements OnInit {
       codeValues.push(inputNumbers.inputNumber);
     });
     this.newCode(codeValues);
+    // Reset the input fields
+    this.inputCodeForm = this._formBuild.group({
+      inputNumbers: this._formBuild.array(
+        this.addNInputFields()
+      )
+    });
   }
 
   checkLength(maxLen:number,ele:ElementRef){
@@ -125,5 +138,55 @@ export class GameComponent implements OnInit {
       str = str.substring(0, str.length - 1);
       ele.nativeElement.value = str;
     }
+  }
+
+  addNewCodeDatabase(newCode:CodeComponent) {
+    this.db.list('/codes').push({
+      gameId: this.id,
+      values: newCode.getStringValue(),
+      user: this.user.getUsername(),
+      date: new Date().toISOString(),
+      correct: 0,
+      wrong: 0,
+      checked: false
+    });
+  }
+
+  getGameCodesById(gameId:string) {
+    let codeArray = new Array<CodeComponent>();
+    let numberCode=new Array();
+    let correctNumbers = 0;
+    let wrongNumbers = 0;
+    let codeUser = null;
+    let codeDate = null;
+    let codeChecked = false;
+
+    let self = this;
+
+    this.db.list('/codes', ref => 
+      ref.orderByChild('gameId').equalTo(gameId))
+      .valueChanges()
+      .subscribe(gameCodes => {
+        codeArray=[];
+        gameCodes.forEach((code:any)=>{
+          numberCode = code.values.split('');
+          for(let x=0; x<numberCode.length; x++) {
+            numberCode[x] = parseInt(numberCode[x]);
+          }
+
+          correctNumbers = code.correct;
+          wrongNumbers = code.wrong;
+          codeUser = new UserComponent().setUsername(code.user);
+          codeDate = new Date(code.date);
+          codeChecked = code.checked;
+
+          codeArray.push(self.createNewCode(numberCode,codeUser,codeDate,correctNumbers,wrongNumbers,codeChecked));
+        });
+        //Sort "My Games List" by edit time to have the latest on the top
+        codeArray.sort((a: any, b: any) => 
+          new Date(b.getDate()).getTime() - new Date(a.getDate()).getTime()
+        );
+        this.codes=codeArray;
+    });
   }
 }

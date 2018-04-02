@@ -13,6 +13,9 @@ export class CodeComponent implements OnInit {
   public codeValues:NumberComponent[]=new Array<NumberComponent>();
   private user:UserComponent;
   private date:Date;
+  private correct:number;
+  private wrong:number;
+  private checked:boolean;
 
   constructor() {}
 
@@ -49,4 +52,43 @@ export class CodeComponent implements OnInit {
     this.codeValues = this.values;
   }
 
+  getDate() {
+    return this.date;
+  }
+
+  setDate(_newDate:Date) {
+    this.date = _newDate;
+  }
+
+  getUser() {
+    return this.user;
+  }
+
+  setUser(_user:UserComponent) {
+    this.user=_user;
+  }
+
+  getCorrect() {
+    return this.correct;
+  }
+
+  setCorrect(_correct:number) {
+    this.correct = _correct;
+  }
+
+  getWrong() {
+    return this.wrong;
+  }
+
+  setWrong(_wrong:number) {
+    this.wrong = _wrong;
+  }
+
+  getChecked() {
+    return this.checked;
+  }
+
+  setChecked(_checked:boolean) {
+    this.checked = _checked;
+  }
 }
