@@ -20,3 +20,12 @@
     text-decoration: underline;
     font-weight: bold;
 }
+
+.newGameButton {
+    margin-bottom:1em;
+}
+
+.maxGamesMessage {
+    display:block;
+    font-style: italic;
+}

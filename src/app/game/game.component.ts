@@ -21,8 +21,8 @@ export class GameComponent implements OnInit {
   private opponentCodes:CodeComponent[];
   private user1:UserComponent;
   private user2:UserComponent;
-  private user1Code:number[];
-  private user2Code:number[];
+  private user1Code:number;
+  private user2Code:number;
   private startDate:Date;
   private editDate:Date;
   private finishDate:Date;
@@ -30,9 +30,12 @@ export class GameComponent implements OnInit {
   private codesLengthArray:Array<Number>;
   private gameSubscription;
   private myTurn:boolean;
-  private seeMyCodes:boolean=true;
+  private seeMyCodes:boolean = true;
+  private gameInitialized:boolean = false;
+  private gameInitializedByYou:boolean = false;
 
   inputCodeForm: FormGroup;
+  myCodeForm: FormGroup;
 
   constructor(private _formBuild: FormBuilder,
     private settingsService: SettingsService,
@@ -52,17 +55,45 @@ export class GameComponent implements OnInit {
       this.db.object('/games/'+this.id).valueChanges().subscribe(
         (game:any) => {
           this.getGameCodesById(this.id); // This function fills the this.codes variable
-          this.user1=game.user1;
-          this.user2=game.user2;
-          this.user1Code=game.user1code;
-          this.user2Code=game.user2code;
+          let user1 = new UserComponent();
+          user1.setUsername(game.user1);
+          this.user1=user1;
+          let user2 = new UserComponent();
+          user2.setUsername(game.user2);
+          this.user2=user2;
+          this.user1Code=game.user1Code;
+          this.user2Code=game.user2Code;
           this.startDate=game.startDate;
           this.editDate=game.editDate;
           this.finishDate=game.finishDate;
           this.codesLength=game.codesLength;
 
+          this.gameInitialized = (game.user1Code!='' && game.user2Code!='');
+          if(!this.gameInitialized) {
+            if(this.user1.getUsername()==this.user.getUsername()) {
+              if(game.user1Code==''){
+                this.gameInitializedByYou=false;
+              } else {
+                this.gameInitializedByYou=true;
+              }
+            } else {
+              if(this.user2.getUsername()==this.user.getUsername()) {
+                if(game.user2Code==''){
+                  this.gameInitializedByYou=false;
+                } else {
+                  this.gameInitializedByYou=true;
+                }
+              }
+            }
+          }
+
           this.codesLengthArray=Array.apply( 0, { length: this.codesLength } );
           this.inputCodeForm = this._formBuild.group({
+            inputNumbers: this._formBuild.array(
+              this.addNInputFields()
+            )
+          });
+          this.myCodeForm = this._formBuild.group({
             inputNumbers: this._formBuild.array(
               this.addNInputFields()
             )
@@ -73,6 +104,11 @@ export class GameComponent implements OnInit {
 
   ngOnInit() {
     this.inputCodeForm = this._formBuild.group({
+      inputNumbers: this._formBuild.array(
+        []
+      )
+    });
+    this.myCodeForm = this._formBuild.group({
       inputNumbers: this._formBuild.array(
         []
       )
@@ -128,6 +164,36 @@ export class GameComponent implements OnInit {
         this.addNInputFields()
       )
     });
+  }
+
+  submitFirstCode(){
+    let gameId = this.id;
+    let newData={
+      codes: '',
+      user1: this.user1.getUsername(),
+      user2: this.user2.getUsername(),
+      user1Code: this.user1Code,
+      user2Code: this.user2Code,
+      startDate: this.startDate,
+      editDate: new Date().toISOString(),
+      finishDate: '',
+      codesLength:this.codesLength
+    };
+
+    let codeValuesString = "";
+    let codeValues:number;
+    this.myCodeForm.value.inputNumbers.forEach(inputNumbers=>{
+      codeValuesString = codeValuesString.concat(inputNumbers.inputNumber);
+    });
+    codeValues = parseInt(codeValuesString);
+    if(this.user1.getUsername()== this.user.getUsername()) {
+      newData.user1Code = codeValues;
+    } else {
+      if(this.user2.getUsername()== this.user.getUsername()) {
+        newData.user2Code = codeValues;
+      }
+    }
+    this.db.list('/games').set(gameId,newData);
   }
 
   checkLength(maxLen:number,ele:ElementRef){

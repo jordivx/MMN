@@ -26,6 +26,8 @@ export class GameListComponent implements OnInit {
   private gameListData: object[] = [];
   private myGamesListData: object[] = [];
   private freeGamesListData: object[] = [];
+  private nMyGames: number = 0;
+  private nFreeGames: number = 0;
 
   /*
   * Constructor for the game list component
@@ -65,17 +67,20 @@ export class GameListComponent implements OnInit {
         this.myGamesListData.sort((a: any, b: any) => 
           new Date(b.editDate).getTime() - new Date(a.editDate).getTime()
         )
+        this.nMyGames = this.myGamesListData.length; 
         // Filter the results not associated with the current user and with some empty place
         this.freeGamesListData = this.gameListData.filter(
           (game:any) => 
             (game.user1==="" || game.user2==="") && 
             game.user1!=this.user.getUsername() && 
-            game.user2!=this.user.getUsername()
+            game.user2!=this.user.getUsername() &&
+            game.user1Code != ""
         );
         //Sort "Free Games List"  by edit time to have the latest on the top
         this.freeGamesListData.sort((a: any, b: any) => 
           new Date(b.editDate).getTime() - new Date(a.editDate).getTime()
         )
+        this.nFreeGames = this.freeGamesListData.length;
       }
     );
   }

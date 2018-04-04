@@ -21,5 +21,7 @@
     "Play": "Jugar",
     "Waiting Turn": "Esperando al oponente",
     "My Codes": "Mis Códigos",
-    "Opponent Codes": "Códigos del Oponente"
+    "Opponent Codes": "Códigos del Oponente",
+    "MaxGamesMessage": "No se pueden tener más de 10 partidas",
+    "WaitingFirstTurn": "Esperando que el rival escoja código"
 }

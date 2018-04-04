@@ -21,5 +21,7 @@
     "Play": "Jugar",
     "Waiting Turn": "Esperant al oponent",
     "My Codes": "Els Meus Codis",
-    "Opponent Codes": "Codis del Oponent"
+    "Opponent Codes": "Codis del Oponent",
+    "MaxGamesMessage": "No es poden tenir més de 10 partides",
+    "WaitingFirstTurn": "Esperant que el rival esculli codi"
 }
