@@ -8,7 +8,7 @@
                 <input type="number" formControlName="inputNumber" class="numberInput" appLimitedCharacters="1">
             </td>
             <td>
-              <button class="btn btn-primary" [disabled]="!myTurn">{{ 'New Code' | translate | uppercase }}</button>
+              <button class="btn btn-primary" [disabled]="!myTurn">{{ 'Your Code' | translate | uppercase }}</button>
             </td>
           </tr>
         </table>
@@ -23,12 +23,62 @@
   <form [formGroup]="inputCodeForm" (ngSubmit)="submitNewCode()">
   <div align="center">
     <table class="inputTable" formArrayName="inputNumbers">
-      <tr *ngIf="myTurn">
+      <tr *ngIf="myTurn && !havePendingChecking">
         <td *ngFor="let codeNumber of codesLengthArray; let i = index" [formGroupName]="i">
             <input type="number" formControlName="inputNumber" class="numberInput" appLimitedCharacters="1">
         </td>
         <td>
           <button class="btn btn-primary" [disabled]="!myTurn">{{ 'New Code' | translate | uppercase }}</button>
+        </td>
+      </tr>
+      <tr *ngIf="myTurn && havePendingChecking">
+        <td>
+            {{codes[0].getStringValue()}}
+        </td>
+        <td>
+          <table>
+            <tr>
+              <td>
+                <input type="button" class="quantityButton plus-button" (click)="increaseCorrectGuess()" [disabled]="disablePlusCorrectButton()">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="numberInputGuess">
+                  {{correctGuess}}
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input type="button" class="quantityButton minus-button" (click)="decreaseCorrectGuess()" [disabled]="disableMinusCorrectButton()">
+              </td>
+            </tr>
+          </table>
+        </td>
+        <td>
+          <table>
+            <tr>
+              <td>
+                <input type="button" class="quantityButton plus-button" (click)="increaseWrongGuess()" [disabled]="disablePlusWrongButton()">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="numberInputGuess">
+                    {{wrongGuess}}
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <input type="button" class="quantityButton minus-button" (click)="decreaseWrongGuess()" [disabled]="disableMinusWrongButton()">
+              </td>
+            </tr>
+          </table>
+        </td>
+        <td>
+          <input type="button" value="VALIDAR">
         </td>
       </tr>
       <tr *ngIf="!myTurn">
@@ -41,10 +91,10 @@
   </form>
   <table class="swapCodesList">
     <tr>
-      <td (click)="seeMyCodesTab()" [class.codesListSelected]="seeMyCodes">
+      <td (click)="seeCodesTab('myCodes')" [class.codesListSelected]="seeMyCodes">
         {{ 'My Codes' | translate | uppercase }}
       </td>
-      <td (click)="seeOpponentCodesTab()" [class.codesListSelected]="!seeMyCodes">
+      <td (click)="seeCodesTab('opponentCodes')" [class.codesListSelected]="!seeMyCodes">
         {{ 'Opponent Codes' | translate | uppercase }}
       </td>
     </tr>

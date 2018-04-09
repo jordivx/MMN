@@ -15,6 +15,7 @@ import { UserService } from '../user.service';
 })
 export class GameComponent implements OnInit {
 
+  // Variable declarations
   private id:string;
   @Input() public codes:CodeComponent[];
   private myCodes:CodeComponent[];
@@ -33,6 +34,9 @@ export class GameComponent implements OnInit {
   private seeMyCodes:boolean = true;
   private gameInitialized:boolean = false;
   private gameInitializedByYou:boolean = false;
+  private havePendingChecking:boolean = false;
+  private correctGuess:number = 0;
+  private wrongGuess:number = 0;
 
   inputCodeForm: FormGroup;
   myCodeForm: FormGroup;
@@ -44,6 +48,7 @@ export class GameComponent implements OnInit {
     private db: AngularFireDatabase,
     private user:UserService) { 
 
+      // Get the game id from the parameter
       this.id = this.route.snapshot.paramMap.get('id');
       
       //If the game's id from the parameter is not valid, redirect to the games list
@@ -52,6 +57,7 @@ export class GameComponent implements OnInit {
         this.router.navigate(['/gameList']);
       }
 
+      // Get the game data from database
       this.db.object('/games/'+this.id).valueChanges().subscribe(
         (game:any) => {
           this.getGameCodesById(this.id); // This function fills the this.codes variable
@@ -68,41 +74,22 @@ export class GameComponent implements OnInit {
           this.finishDate=game.finishDate;
           this.codesLength=game.codesLength;
 
-          this.gameInitialized = (game.user1Code!='' && game.user2Code!='');
-          if(!this.gameInitialized) {
-            if(this.user1.getUsername()==this.user.getUsername()) {
-              if(game.user1Code==''){
-                this.gameInitializedByYou=false;
-              } else {
-                this.gameInitializedByYou=true;
-              }
-            } else {
-              if(this.user2.getUsername()==this.user.getUsername()) {
-                if(game.user2Code==''){
-                  this.gameInitializedByYou=false;
-                } else {
-                  this.gameInitializedByYou=true;
-                }
-              }
-            }
-          }
+          // Checks if the game has been initialized and if has been initialized by the current user or not.
+          this.checkGameInitialized(game.user1Code,game.user2Code);
 
+          // Initialize the length array to know how many positions have to have the codes
           this.codesLengthArray=Array.apply( 0, { length: this.codesLength } );
-          this.inputCodeForm = this._formBuild.group({
-            inputNumbers: this._formBuild.array(
-              this.addNInputFields()
-            )
-          });
-          this.myCodeForm = this._formBuild.group({
-            inputNumbers: this._formBuild.array(
-              this.addNInputFields()
-            )
-          });
+
+          // Initialize the code forms empty with the correct positions
+          this.resetInputCodeFormFields();
+          this.resetMyCodeFormFields();
         }
       );
     }
 
+  
   ngOnInit() {
+    // Initialize the codes forms empty to avoid null pointers.
     this.inputCodeForm = this._formBuild.group({
       inputNumbers: this._formBuild.array(
         []
@@ -113,6 +100,28 @@ export class GameComponent implements OnInit {
         []
       )
     });
+  }
+
+  // Checks if the game has been initialized and if has been initialized by the current user or not.
+  checkGameInitialized(user1Code,user2Code) {
+    this.gameInitialized = (user1Code!='' && user2Code!='');
+    if(!this.gameInitialized) {
+      if(this.user1.getUsername()==this.user.getUsername()) {
+        if(user1Code==''){
+          this.gameInitializedByYou=false;
+        } else {
+          this.gameInitializedByYou=true;
+        }
+      } else {
+        if(this.user2.getUsername()==this.user.getUsername()) {
+          if(user2Code==''){
+            this.gameInitializedByYou=false;
+          } else {
+            this.gameInitializedByYou=true;
+          }
+        }
+      }
+    }
   }
 
   /** 
@@ -131,6 +140,8 @@ export class GameComponent implements OnInit {
     }
     return inputFieldsArray;
   }
+
+  // Create a code object from the data obtained
   createNewCode(values:number[], user:UserComponent, date:Date, correct:number, wrong:number, checked:boolean) {
     let newCode = new CodeComponent();
     values.forEach(value => {
@@ -147,18 +158,24 @@ export class GameComponent implements OnInit {
     return newCode;
   }
 
+  // Parse the code into a code object and save it to the database
   newCode(values:number[]) {
     let newCode = this.createNewCode(values,this.user.getUsername(),new Date(),0,0,false);
     this.addNewCodeDatabase(newCode);
   }
   
+  // Get the code guess from the user, parse it to a code object, save it to the database and reset the input fields
   submitNewCode(){
-    let codeValues = new Array();
-    this.inputCodeForm.value.inputNumbers.forEach(inputNumbers=>{
-      codeValues.push(inputNumbers.inputNumber);
-    });
+    // Get the code guess from the user
+    let codeValues = this.getInputCodeFormValues();
+    // Parse the code to a code object and save it to the database
     this.newCode(codeValues);
-    // Reset the input fields
+    // Reset the code input fields
+    this.resetInputCodeFormFields();
+  }
+
+  // Reset the code input fields
+  resetInputCodeFormFields() {
     this.inputCodeForm = this._formBuild.group({
       inputNumbers: this._formBuild.array(
         this.addNInputFields()
@@ -166,8 +183,21 @@ export class GameComponent implements OnInit {
     });
   }
 
+  // Get the code guess from the user
+  getInputCodeFormValues() {
+    let codeValues = new Array();
+    this.inputCodeForm.value.inputNumbers.forEach(inputNumbers=>{
+      codeValues.push(inputNumbers.inputNumber);
+    });
+    return codeValues;
+  }
+
+  // Get the first code and associate it with the user in the database
   submitFirstCode(){
+
     let gameId = this.id;
+
+    // Create an object with the game object to mantain the old information and only update the necessary fields
     let newData={
       codes: '',
       user1: this.user1.getUsername(),
@@ -180,12 +210,10 @@ export class GameComponent implements OnInit {
       codesLength:this.codesLength
     };
 
-    let codeValuesString = "";
-    let codeValues:number;
-    this.myCodeForm.value.inputNumbers.forEach(inputNumbers=>{
-      codeValuesString = codeValuesString.concat(inputNumbers.inputNumber);
-    });
-    codeValues = parseInt(codeValuesString);
+    // Obtain the user input parsed to a number
+    let codeValues:number = this.getMyCodeFormValues();
+    
+    // Associate the code to the user 1 or 2 depending on which user is using
     if(this.user1.getUsername()== this.user.getUsername()) {
       newData.user1Code = codeValues;
     } else {
@@ -193,23 +221,30 @@ export class GameComponent implements OnInit {
         newData.user2Code = codeValues;
       }
     }
+
+    // Update the database with the new object (only has been modified user1Code or user2Code)
     this.db.list('/games').set(gameId,newData);
   }
 
-  checkLength(maxLen:number,ele:ElementRef){
-    console.log(maxLen);
-    let fieldLength = ele.nativeElement.value.length;
-    if(fieldLength <= maxLen){
-        return true;
-    }
-    else
-    {
-      let str = ele.nativeElement.value;
-      str = str.substring(0, str.length - 1);
-      ele.nativeElement.value = str;
-    }
+  // Reset the users code input fields
+  resetMyCodeFormFields() {
+    this.myCodeForm = this._formBuild.group({
+      inputNumbers: this._formBuild.array(
+        this.addNInputFields()
+      )
+    });
   }
 
+  // Get the code from the user and parse it to a number
+  getMyCodeFormValues() {
+    let codeValuesString = "";
+    this.myCodeForm.value.inputNumbers.forEach(inputNumbers=>{
+      codeValuesString = codeValuesString.concat(inputNumbers.inputNumber);
+    });
+    return (parseInt(codeValuesString));
+  }
+
+  // Add the new code introduced to the database
   addNewCodeDatabase(newCode:CodeComponent) {
     this.db.list('/codes').push({
       gameId: this.id,
@@ -222,14 +257,9 @@ export class GameComponent implements OnInit {
     });
   }
 
+  // Having the game id, get the codes from database, parse them into code objects and move them to the scope
   getGameCodesById(gameId:string) {
     let codeArray = new Array<CodeComponent>();
-    let numberCode=new Array();
-    let correctNumbers = 0;
-    let wrongNumbers = 0;
-    let codeUser = null;
-    let codeDate = null;
-    let codeChecked = false;
 
     let self = this;
 
@@ -237,33 +267,26 @@ export class GameComponent implements OnInit {
       ref.orderByChild('gameId').equalTo(gameId))
       .valueChanges()
       .subscribe(gameCodes => {
+        // Get the codes and parse into code objects
         codeArray=[];
         gameCodes.forEach((code:any)=>{
-          numberCode = code.values.split('');
-          for(let x=0; x<numberCode.length; x++) {
-            numberCode[x] = parseInt(numberCode[x]);
-          }
-
-          correctNumbers = code.correct;
-          wrongNumbers = code.wrong;
-          let userForCode = new UserComponent();
-          userForCode.setUsername(code.user);
-          codeUser = userForCode;
-          codeDate = new Date(code.date);
-          codeChecked = code.checked;
-
-          codeArray.push(self.createNewCode(numberCode,codeUser,codeDate,correctNumbers,wrongNumbers,codeChecked));
+          codeArray.push(self.createNewCodeFromDatabase(code));
         });
+
         //Sort "My Games List" by edit time to have the latest on the top
         codeArray.sort((a: any, b: any) => 
           new Date(b.getDate()).getTime() - new Date(a.getDate()).getTime()
         );
+
+        // Save the ordered list into the scope
         this.codes=codeArray;
-        if(this.codes.length>0) {
-          this.myTurn = (this.codes[0].getUser().getUsername() != this.user.getUsername());
-        } else {
-          this.myTurn = true;
-        }
+
+        // Checks if is your turn or not to show one thing or another in the screen
+        this.checkTurn();
+
+        this.checkHavePendingChecking();
+
+        // Filter the codes into 2 groups, your codes and the opponent ones
         this.myCodes = this.codes.filter(
           (code:CodeComponent) => code.getUser().getUsername() == this.user.getUsername()
         );
@@ -273,11 +296,99 @@ export class GameComponent implements OnInit {
     });
   }
 
-  seeMyCodesTab() {
-    this.seeMyCodes=true;
+  // Creates a new code object from the info obtained from database
+  createNewCodeFromDatabase(code:any) {
+    let numberCode=new Array();
+    let correctNumbers = 0;
+    let wrongNumbers = 0;
+    let codeUser = null;
+    let codeDate = null;
+    let codeChecked = false;
+
+    numberCode = code.values.split('');
+    for(let x=0; x<numberCode.length; x++) {
+      numberCode[x] = parseInt(numberCode[x]);
+    }
+    correctNumbers = code.correct;
+    wrongNumbers = code.wrong;
+    let userForCode = new UserComponent();
+    userForCode.setUsername(code.user);
+    codeUser = userForCode;
+    codeDate = new Date(code.date);
+    codeChecked = code.checked;
+
+    return this.createNewCode(numberCode,codeUser,codeDate,correctNumbers,wrongNumbers,codeChecked);
   }
 
-  seeOpponentCodesTab() {
-    this.seeMyCodes=false;
+  // Checks if is your turn or not to show one thing or another in the screen
+  checkTurn() {
+    if(this.codes.length>0) {
+      this.myTurn = (this.codes[0].getUser().getUsername() != this.user.getUsername());
+    } else {
+      if((this.user1.getUsername() == this.user.getUsername()) ||
+        (this.user2.getUsername() == this.user.getUsername() && this.user1Code.toString().length>0 && this.user2Code.toString().length==0)) {
+        this.myTurn = true;
+      } else {
+        this.myTurn = false;
+      }
+    }
+  }
+
+  // Function to check if the last code is pending to check by you
+  checkHavePendingChecking() {
+    if(this.codes.length>0) {
+      if (this.codes[0].getUser().getUsername() == this.user.getUsername()) {
+        this.havePendingChecking = false;
+      } else {
+        if(this.codes[0].getChecked()) {
+          this.havePendingChecking = false;
+        } else {
+          this.havePendingChecking = true;
+        }
+      }
+    } else {
+      this.havePendingChecking = false;
+    }
+  }
+
+  // Function to change the tabs variable to show "myCodes" or the "opponentCodes"
+  seeCodesTab(tab:string) {
+    if(tab=="myCodes") {
+      this.seeMyCodes=true;
+    } else {
+      this.seeMyCodes=false;
+    }
+  }
+
+  decreaseCorrectGuess() {
+    this.correctGuess--;
+  }
+
+  disableMinusCorrectButton() {
+    return (this.correctGuess<=0);
+  }
+
+  increaseCorrectGuess() {
+    this.correctGuess++;
+  }
+
+  disablePlusCorrectButton() {
+    return (this.correctGuess>=this.codesLength);
+  }
+
+  decreaseWrongGuess() {
+    this.wrongGuess--;
+  }
+
+  disableMinusWrongButton() {
+    return (this.wrongGuess<=0);
+  }
+
+  increaseWrongGuess() {
+    this.wrongGuess++;
+  }
+
+  disablePlusWrongButton() {
+    return (this.wrongGuess>=this.codesLength);
   }
 }

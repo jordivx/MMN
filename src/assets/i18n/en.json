@@ -23,5 +23,6 @@
     "My Codes": "My Codes",
     "Opponent Codes": "Opponent Codes",
     "MaxGamesMessage": "Can't have more than 10 games",
-    "WaitingFirstTurn": "Waiting the opponent to choose the code"
+    "WaitingFirstTurn": "Waiting the opponent to choose the code",
+    "Your Code": "Your code"
 }
