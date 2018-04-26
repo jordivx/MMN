@@ -12,6 +12,9 @@
       <li class="nav-item">
         <a class="nav-link" routerLink="/settings">{{ 'Settings' | translate }}</a>
       </li>
+      <li class="nav-item">
+        <a class="nav-link" (click)="logout()"  routerLink="/">{{ 'LogOut' | translate }}</a>
+      </li>
     </ul>
   </div>
 </nav>

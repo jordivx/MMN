@@ -9,20 +9,19 @@ import { UserComponent } from '../user/user.component';
 })
 export class CodeComponent implements OnInit {
 
-  @Input() public values:NumberComponent[];
-  public codeValues:NumberComponent[]=new Array<NumberComponent>();
-  private user:UserComponent;
-  private date:Date;
-  private correct:number;
-  private wrong:number;
-  private checked:boolean;
+  @Input() public values: NumberComponent[];
+  public codeValues: NumberComponent[] = new Array < NumberComponent > ();
+  private user: UserComponent;
+  private date: Date;
+  private correct: number;
+  private wrong: number;
+  private checked: boolean;
 
   constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-  newCodeComponent(_values:NumberComponent[],_user:UserComponent,_date:Date) {
+  newCodeComponent(_values: NumberComponent[], _user: UserComponent, _date: Date) {
     this.values = _values;
     this.user = _user;
     this.date = _date;
@@ -33,20 +32,20 @@ export class CodeComponent implements OnInit {
   }
 
   getStringValue() {
-    let stringValue:string = "";
-    this.values.forEach(value=>{
-      stringValue=stringValue.concat(value.getValue().toString());
-    })
+    let stringValue = '';
+    this.values.forEach(value => {
+      stringValue = stringValue.concat(value.getValue().toString());
+    });
     return stringValue;
   }
 
-  setValues(_values:NumberComponent[]) {
+  setValues(_values: NumberComponent[]) {
     this.values = _values;
   }
 
-  addValue(_value:NumberComponent) {
-    if(!this.values){
-      this.values=new Array<NumberComponent>();
+  addValue(_value: NumberComponent) {
+    if (!this.values) {
+      this.values = new Array < NumberComponent > ();
     }
     this.values.push(_value);
     this.codeValues = this.values;
@@ -56,7 +55,7 @@ export class CodeComponent implements OnInit {
     return this.date;
   }
 
-  setDate(_newDate:Date) {
+  setDate(_newDate: Date) {
     this.date = _newDate;
   }
 
@@ -64,15 +63,15 @@ export class CodeComponent implements OnInit {
     return this.user;
   }
 
-  setUser(_user:UserComponent) {
-    this.user=_user;
+  setUser(_user: UserComponent) {
+    this.user = _user;
   }
 
   getCorrect() {
     return this.correct;
   }
 
-  setCorrect(_correct:number) {
+  setCorrect(_correct: number) {
     this.correct = _correct;
   }
 
@@ -80,7 +79,7 @@ export class CodeComponent implements OnInit {
     return this.wrong;
   }
 
-  setWrong(_wrong:number) {
+  setWrong(_wrong: number) {
     this.wrong = _wrong;
   }
 
@@ -88,7 +87,8 @@ export class CodeComponent implements OnInit {
     return this.checked;
   }
 
-  setChecked(_checked:boolean) {
+  setChecked(_checked: boolean) {
     this.checked = _checked;
   }
 }
+

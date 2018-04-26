@@ -19,31 +19,31 @@ import { UserService } from '../user.service';
 export class GameListComponent implements OnInit {
 
   // Variable declarations
-  private gameList:GameComponent[];
-  private user1:UserComponent;
-  private user2:UserComponent;
+  private gameList: GameComponent[];
+  private user1: UserComponent;
+  private user2: UserComponent;
   private gameListSubscription;
   private gameListData: object[] = [];
   private myGamesListData: object[] = [];
   private freeGamesListData: object[] = [];
-  private nMyGames: number = 0;
-  private nFreeGames: number = 0;
+  private nMyGames = 0;
+  private nFreeGames = 0;
 
   /*
-  * Constructor for the game list component
-  */
+   * Constructor for the game list component
+   */
   constructor(private db: AngularFireDatabase,
-    private router:Router,
+    private router: Router,
     public settingsService: SettingsService,
-    private user:UserService) {
-    
-    //Get the games from the database
+    private user: UserService) {
+
+    // Get the games from the database
     this.gameListSubscription = this.db.list('/games').snapshotChanges().subscribe(
       data => {
-        //Map the objects to have the uid and the data
+        // Map the objects to have the uid and the data
         data.map(fireGameObject => {
-          let objectData = fireGameObject.payload.val();
-          let objectId = fireGameObject.payload.key;
+          const objectData = fireGameObject.payload.val();
+          const objectId = fireGameObject.payload.key;
           this.gameListData.push({
             id: objectId,
             codes: objectData.codes,
@@ -59,37 +59,38 @@ export class GameListComponent implements OnInit {
         });
         // Filter the results by the current user to have the games associated with it.
         this.myGamesListData = this.gameListData.filter(
-          (game:any) => 
-            game.user1===this.user.getUsername() || 
-            game.user2===this.user.getUsername()
+          (game: any) =>
+          game.user1 === this.user.getUsername() ||
+          game.user2 === this.user.getUsername()
         );
-        //Sort "My Games List" by edit time to have the latest on the top
-        this.myGamesListData.sort((a: any, b: any) => 
+        // Sort "My Games List" by edit time to have the latest on the top
+        this.myGamesListData.sort((a: any, b: any) =>
           new Date(b.editDate).getTime() - new Date(a.editDate).getTime()
-        )
-        this.nMyGames = this.myGamesListData.length; 
+        );
+        this.nMyGames = this.myGamesListData.length;
         // Filter the results not associated with the current user and with some empty place
         this.freeGamesListData = this.gameListData.filter(
-          (game:any) => 
-            (game.user1==="" || game.user2==="") && 
-            game.user1!=this.user.getUsername() && 
-            game.user2!=this.user.getUsername() &&
-            game.user1Code != ""
+          (game: any) =>
+          (game.user1 === '' || game.user2 === '') &&
+          game.user1 !== this.user.getUsername() &&
+          game.user2 !== this.user.getUsername() &&
+          game.user1Code !== ''
         );
-        //Sort "Free Games List"  by edit time to have the latest on the top
-        this.freeGamesListData.sort((a: any, b: any) => 
+        // Sort "Free Games List"  by edit time to have the latest on the top
+        this.freeGamesListData.sort((a: any, b: any) =>
           new Date(b.editDate).getTime() - new Date(a.editDate).getTime()
-        )
+        );
         this.nFreeGames = this.freeGamesListData.length;
+      }, error => {
+        console.log(error);
       }
     );
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   newGame() {
-    let newGameObject = this.db.list('/games').push({
+    const newGameObject = this.db.list('/games').push({
       codes: '',
       user1: this.user.getUsername(),
       user2: '',
@@ -98,19 +99,19 @@ export class GameListComponent implements OnInit {
       startDate: new Date().toISOString(),
       editDate: new Date().toISOString(),
       finishDate: '',
-      codesLength:this.settingsService.getCodeLength()
-    }).then( data => {
-      this.router.navigate(['/game',data.key]);
+      codesLength: this.settingsService.getCodeLength()
+    }).then(data => {
+      this.router.navigate(['/game', data.key]);
     });
   }
 
-  openGame(gameId:string) {
-    this.router.navigate(['/game',gameId]);
+  openGame(gameId: string) {
+    this.router.navigate(['/game', gameId]);
   }
 
-  joinGame(game:any) {
-    let gameId = game.id;
-    let newData={
+  joinGame(game: any) {
+    const gameId = game.id;
+    const newData = {
       codes: game.codes,
       user1: game.user1,
       user2: this.user.getUsername(),
@@ -119,9 +120,10 @@ export class GameListComponent implements OnInit {
       startDate: game.startDate,
       editDate: new Date().toISOString(),
       finishDate: '',
-      codesLength:game.codesLength
+      codesLength: game.codesLength
     };
-    this.db.list('/games').set(gameId,newData);
-    this.router.navigate(['/game',gameId]);
+    this.db.list('/games').set(gameId, newData);
+    this.router.navigate(['/game', gameId]);
   }
 }
+

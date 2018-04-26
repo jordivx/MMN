@@ -36,13 +36,13 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 const firebaseAuth = {
-  apiKey: "AIzaSyDyYOONbKe-rfjVHxGTYZmvq5tajEUUeKw",
-  authDomain: "mmnfirebase.firebaseapp.com",
-  databaseURL: "https://mmnfirebase.firebaseio.com",
-  projectId: "mmnfirebase",
-  storageBucket: "mmnfirebase.appspot.com",
-  messagingSenderId: "146888784036"
-}
+  apiKey: 'AIzaSyDyYOONbKe-rfjVHxGTYZmvq5tajEUUeKw',
+  authDomain: 'mmnfirebase.firebaseapp.com',
+  databaseURL: 'https://mmnfirebase.firebaseio.com',
+  projectId: 'mmnfirebase',
+  storageBucket: 'mmnfirebase.appspot.com',
+  messagingSenderId: '146888784036'
+};
 
 @NgModule({
   declarations: [

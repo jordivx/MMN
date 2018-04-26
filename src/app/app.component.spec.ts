@@ -7,9 +7,36 @@ import { APP_BASE_HREF } from '@angular/common';
 import { NavbarComponent } from './navbar/navbar.component';
 import { GameListComponent } from './game-list/game-list.component';
 import { GameComponent } from './game/game.component';
+import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { SettingsComponent } from './settings/settings.component';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SettingsService } from './settings.service';
+import { UserService } from './user.service';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireModule } from 'angularfire2';
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
+
+const firebaseAuth = {
+  apiKey: 'AIzaSyDyYOONbKe-rfjVHxGTYZmvq5tajEUUeKw',
+  authDomain: 'mmnfirebase.firebaseapp.com',
+  databaseURL: 'https://mmnfirebase.firebaseio.com',
+  projectId: 'mmnfirebase',
+  storageBucket: 'mmnfirebase.appspot.com',
+  messagingSenderId: '146888784036'
+};
+
 describe('AppComponent', () => {
 
-  let title="MMN";
+  const title = 'MMN';
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -19,30 +46,43 @@ describe('AppComponent', () => {
         NumberComponent,
         NavbarComponent,
         GameListComponent,
-        GameComponent
+        GameComponent,
+        HomeComponent,
+        LoginComponent,
+        RegisterComponent,
+        SettingsComponent
       ],
       imports: [
         AppRoutingModule,
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [HttpClient]
+          }
+        }),
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        AngularFireModule.initializeApp(firebaseAuth),
+        AngularFireAuthModule,
+        AngularFireDatabaseModule
       ],
-      providers:[
+      providers: [
         {provide: APP_BASE_HREF, useValue : '/' },
+        SettingsService,
+        UserService
       ]
     }).compileComponents();
   }));
-  it('should create the app', async(() => {
+  it('should create the app', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
-  }));
+  });
   it(`should have as title '${title}'`, async(() => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app.title).toEqual(`${title}`);
-  }));
-  it('should render title in a h1 tag', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain(`Welcome to ${title}!`);
   }));
 });

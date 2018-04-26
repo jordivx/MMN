@@ -4,7 +4,7 @@ import { TranslateService } from '@ngx-translate/core';
 @Injectable()
 export class SettingsService {
 
-  private codeLength:number;
+  private codeLength: number;
 
   constructor(private translate: TranslateService) {
     translate.setDefaultLang('en');
@@ -14,7 +14,7 @@ export class SettingsService {
     return this.codeLength;
   }
 
-  setCodeLength(_newCodeLength:number) {
+  setCodeLength(_newCodeLength: number) {
     this.codeLength = _newCodeLength;
   }
 
