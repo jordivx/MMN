@@ -1,0 +1,23 @@
+table, tr {
+    width: 100%;
+    text-align: center;
+}
+
+td {
+    width:50%;
+}
+
+img {
+    width: 50%;
+}
+
+.username {
+    font-size: 150%;
+    font-weight: bold;
+    color: #343a40;
+    text-transform: uppercase;
+}
+
+.statsTitle {
+    text-decoration: underline; 
+}

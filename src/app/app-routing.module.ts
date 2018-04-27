@@ -8,11 +8,13 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthGuard } from './auth.guard';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard]},
   { path: 'login', component: LoginComponent},
   { path: 'register', component: RegisterComponent},
+  { path: 'profile', component: ProfileComponent},
   { path: 'code', component: CodeComponent, canActivate: [AuthGuard]},
   { path: 'gameList', component: GameListComponent, canActivate: [AuthGuard]},
   { path: 'game', component: GameComponent, canActivate: [AuthGuard]},

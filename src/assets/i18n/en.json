@@ -26,5 +26,8 @@
     "WaitingFirstTurn": "Waiting the opponent to choose the code",
     "Your Code": "Your code",
     "Check Code": "Check Code",
-    "GuessesHigherThanCodeLength": "The sum of the correct and the regular can't be higher than the codes length"
+    "GuessesHigherThanCodeLength": "The sum of the correct and the regular can't be higher than the codes length",
+    "Profile": "Profile",
+    "Won Games": "Won games",
+    "Played Games": "Played games"
 }

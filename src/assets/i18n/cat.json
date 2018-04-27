@@ -26,5 +26,8 @@
     "WaitingFirstTurn": "Esperant que el rival esculli codi",
     "Your Code": "Codi teu",
     "Check Code": "Validar Codi",
-    "GuessesHigherThanCodeLength": "La suma dels correctes i els regulars no pot superar la longitud dels codis"
+    "GuessesHigherThanCodeLength": "La suma dels correctes i els regulars no pot superar la longitud dels codis",
+    "Profile": "Perfil",
+    "Won Games": "Partides guanyades",
+    "Played Games": "Partides jugades"
 }

@@ -1,0 +1,27 @@
+<table align="center">
+  <tr>
+    <td colspan="2" class="username">
+        <img src="../../assets/img/default-user.png">
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2" class="username" style="padding-bottom:1em">
+        {{ username }}
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <p class="statsTitle">{{ 'Won Games' | translate | uppercase }}</p>
+      0
+    </td>
+    <td>
+      <p class="statsTitle">{{ 'Played Games' | translate | uppercase }}</p>
+      0
+    </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+        <button (click)="logout()" class="btn btn-dark" style="margin-top:1em">{{ 'LogOut' | translate | uppercase }}</button>
+    </td>
+  </tr>
+</table>
