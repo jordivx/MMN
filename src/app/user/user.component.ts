@@ -5,22 +5,25 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.css']
 })
+
 export class UserComponent implements OnInit {
 
-  private username:string; 
-  private password:string;
+  private username: string;
+  private password: string;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
+  // Getter for the username attribute
   getUsername() {
     return this.username;
   }
 
-  setUsername(_username:string) {
+  // Setter for the username attribute
+  setUsername(_username: string) {
     this.username = _username;
   }
 
 }
+

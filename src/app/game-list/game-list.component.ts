@@ -89,6 +89,7 @@ export class GameListComponent implements OnInit {
 
   ngOnInit() {}
 
+  // Function to push a new game object into the database and navigate to the game view
   newGame() {
     const newGameObject = this.db.list('/games').push({
       codes: '',
@@ -105,10 +106,12 @@ export class GameListComponent implements OnInit {
     });
   }
 
+  // Function to navigate to the chosen game view
   openGame(gameId: string) {
     this.router.navigate(['/game', gameId]);
   }
 
+  // Function that adds the user to an existing game, updates the database object and navigates to the game view
   joinGame(game: any) {
     const gameId = game.id;
     const newData = {

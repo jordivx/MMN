@@ -9,50 +9,58 @@ import { environment } from '../../environments/environment';
 })
 export class SettingsComponent implements OnInit {
 
-  private codeLength:number;
-  private codeMinLength:number = environment.codeMinLength;
-  private codeMaxLength:number = environment.codeMaxLength;
+  private codeLength: number;
+  private codeMinLength: number = environment.codeMinLength;
+  private codeMaxLength: number = environment.codeMaxLength;
 
-  constructor(public settingsService: SettingsService) { 
+  constructor(public settingsService: SettingsService) {
     this.codeLength = this.settingsService.getCodeLength();
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
+  // Get the codeLength attribute
   getCodeLength() {
     return this.codeLength;
   }
 
-  setCodeLength(_newCodeLength:number) {
+  // Set the codeLength attribute
+  setCodeLength(_newCodeLength: number) {
     this.codeLength = _newCodeLength;
   }
 
-  setServiceCodeLength(){
+  // Set the codeLength attribute from the settings service
+  setServiceCodeLength() {
     this.settingsService.setCodeLength(this.codeLength);
   }
 
+  // Decrease the codeLength attribute value
   decreaseCodeLength() {
     this.codeLength--;
   }
 
+  // Disable the button to decrease the codeLength attribute value
   disableMinusButton() {
-    return (this.codeLength<=this.codeMinLength);
+    return (this.codeLength <= this.codeMinLength);
   }
 
+  // Disable the button to increase the codeLength attribute value
   disablePlusButton() {
-    return (this.codeLength>=this.codeMaxLength);
+    return (this.codeLength >= this.codeMaxLength);
   }
 
+  // Increase the codeLength attribute value
   increaseCodeLength() {
     this.codeLength++;
   }
 
+  // Call to the settings service function to change the language of the application
   switchLanguage(language: string) {
     this.settingsService.switchLanguage(language);
   }
 
-  applySettings(){
+  applySettings() {
     this.setServiceCodeLength();
   }
 }
+

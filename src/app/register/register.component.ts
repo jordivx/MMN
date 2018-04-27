@@ -15,25 +15,27 @@ export class RegisterComponent implements OnInit {
   password: string;
 
   constructor(public settingsService: SettingsService,
-  public router:Router,
-  private user:UserService,
-  private fire:AngularFireAuth) { }
+    public router: Router,
+    private user: UserService,
+    private fire: AngularFireAuth) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
+  // Function that calls the switch language function from the settings service
   switchLanguage(language: string) {
     this.settingsService.switchLanguage(language);
   }
 
-  registerUser(){
-    this.fire.auth.createUserWithEmailAndPassword(this.username+'@mmn.mmn',this.password).then(
+  // Create the user in firebase and navigates to the home view
+  registerUser() {
+    this.fire.auth.createUserWithEmailAndPassword(this.username + '@mmn.mmn', this.password).then(
       data => {
         this.router.navigate(['/']);
       }
-    ).catch( error => {
+    ).catch(error => {
       console.log(error);
     });
   }
 
 }
+

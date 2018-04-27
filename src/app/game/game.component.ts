@@ -108,21 +108,11 @@ export class GameComponent implements OnInit {
   // Checks if the game has been initialized and if has been initialized by the current user or not.
   checkGameInitialized(user1Code, user2Code) {
     this.gameInitialized = (user1Code !== '' && user2Code !== '');
+    this.gameInitializedByYou = false;
     if (!this.gameInitialized) {
-      if (this.user1.getUsername() === this.user.getUsername()) {
-        if (user1Code === '') {
-          this.gameInitializedByYou = false;
-        } else {
+      if ((this.user1.getUsername() === this.user.getUsername() && user1Code !== '') ||
+          (this.user2.getUsername() === this.user.getUsername() && user2Code !== '')) {
           this.gameInitializedByYou = true;
-        }
-      } else {
-        if (this.user2.getUsername() === this.user.getUsername()) {
-          if (user2Code === '') {
-            this.gameInitializedByYou = false;
-          } else {
-            this.gameInitializedByYou = true;
-          }
-        }
       }
     }
   }
@@ -291,10 +281,10 @@ export class GameComponent implements OnInit {
 
         // Filter the codes into 2 groups, your codes and the opponent ones
         this.myCodes = this.codes.filter(
-          (code: CodeComponent) => code.getUser().getUsername() === this.user.getUsername()
+          (code: CodeComponent) => code.getUser().getUsername() === this.user.getUsername() && code.getChecked()
         );
         this.opponentCodes = this.codes.filter(
-          (code: CodeComponent) => code.getUser().getUsername() !== this.user.getUsername()
+          (code: CodeComponent) => code.getUser().getUsername() !== this.user.getUsername() && code.getChecked()
         );
       });
   }
@@ -341,18 +331,13 @@ export class GameComponent implements OnInit {
 
   // Function to check if the last code is pending to check by you
   checkHavePendingChecking() {
+    this.havePendingChecking = false;
     if (this.codes.length > 0) {
-      if (this.codes[0].getUser().getUsername() === this.user.getUsername()) {
-        this.havePendingChecking = false;
-      } else {
-        if (this.codes[0].getChecked()) {
-          this.havePendingChecking = false;
-        } else {
+      if (this.codes[0].getUser().getUsername() !== this.user.getUsername()) {
+        if (!this.codes[0].getChecked()) {
           this.havePendingChecking = true;
         }
       }
-    } else {
-      this.havePendingChecking = false;
     }
   }
 
@@ -365,34 +350,42 @@ export class GameComponent implements OnInit {
     }
   }
 
+  // Function to decrease the correct guess variable
   decreaseCorrectGuess() {
     this.correctGuess--;
   }
 
+  // Disable the button to decrease the correct guess value
   disableMinusCorrectButton() {
     return (this.correctGuess <= 0);
   }
 
+  // Function to increase the correct guess variable
   increaseCorrectGuess() {
     this.correctGuess++;
   }
 
+  // Disable the button to increase the correct guess value
   disablePlusCorrectButton() {
     return (this.correctGuess >= this.codesLength);
   }
 
+  // Function to decrease the wrong guess variable
   decreaseWrongGuess() {
     this.wrongGuess--;
   }
 
+  // Disable the button to decrease the wrong guess value
   disableMinusWrongButton() {
     return (this.wrongGuess <= 0);
   }
 
+  // Function to increase the wrong guess variable
   increaseWrongGuess() {
     this.wrongGuess++;
   }
 
+  // Disable the button to increase the wrong guess value
   disablePlusWrongButton() {
     return (this.wrongGuess >= this.codesLength);
   }
