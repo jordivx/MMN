@@ -24,5 +24,6 @@
     "Opponent Codes": "Códigos del Oponente",
     "MaxGamesMessage": "No se pueden tener más de 10 partidas",
     "WaitingFirstTurn": "Esperando que el rival escoja código",
-    "Your Code": "Tu Código"
+    "Your Code": "Tu Código",
+    "Check Code": "Validar Código"
 }

@@ -135,8 +135,9 @@ export class GameComponent implements OnInit {
   }
 
   // Create a code object from the data obtained
-  createNewCode(values: number[], user: UserComponent, date: Date, correct: number, wrong: number, checked: boolean) {
+  createNewCode(codeId: string, values: number[], user: UserComponent, date: Date, correct: number, wrong: number, checked: boolean) {
     const newCode = new CodeComponent();
+    newCode.setId(codeId);
     values.forEach(value => {
       const newNumberComponent = new NumberComponent();
       newNumberComponent.setValue(value);
@@ -153,7 +154,7 @@ export class GameComponent implements OnInit {
 
   // Parse the code into a code object and save it to the database
   newCode(values: number[]) {
-    const newCode = this.createNewCode(values, this.user.getUsername(), new Date(), 0, 0, false);
+    const newCode = this.createNewCode(null, values, this.user.getUsername(), new Date(), 0, 0, false);
     this.addNewCodeDatabase(newCode);
   }
 
@@ -239,7 +240,7 @@ export class GameComponent implements OnInit {
 
   // Add the new code introduced to the database
   addNewCodeDatabase(newCode: CodeComponent) {
-    this.db.list('/codes').push({
+    const newData = {
       gameId: this.id,
       values: newCode.getStringValue(),
       user: this.user.getUsername(),
@@ -247,6 +248,19 @@ export class GameComponent implements OnInit {
       correct: 0,
       wrong: 0,
       checked: false
+    };
+    this.db.list('/codes').push(newData).then(data => {
+      this.db.list('/codes').set(data.key,
+      {
+        codeId: data.key,
+        gameId: newData.gameId,
+        values: newData.values,
+        user: newData.user,
+        date: newData.date,
+        correct: 0,
+        wrong: 0,
+        checked: false
+      });
     });
   }
 
@@ -291,6 +305,7 @@ export class GameComponent implements OnInit {
 
   // Creates a new code object from the info obtained from database
   createNewCodeFromDatabase(code: any) {
+    let codeId = null;
     let numberCode = new Array();
     let correctNumbers = 0;
     let wrongNumbers = 0;
@@ -298,6 +313,7 @@ export class GameComponent implements OnInit {
     let codeDate = null;
     let codeChecked = false;
 
+    codeId = code.codeId;
     numberCode = code.values.split('');
     for (let x = 0; x < numberCode.length; x++) {
       numberCode[x] = parseInt(numberCode[x]);
@@ -310,7 +326,7 @@ export class GameComponent implements OnInit {
     codeDate = new Date(code.date);
     codeChecked = code.checked;
 
-    return this.createNewCode(numberCode, codeUser, codeDate, correctNumbers, wrongNumbers, codeChecked);
+    return this.createNewCode(codeId, numberCode, codeUser, codeDate, correctNumbers, wrongNumbers, codeChecked);
   }
 
   // Checks if is your turn or not to show one thing or another in the screen
@@ -388,6 +404,21 @@ export class GameComponent implements OnInit {
   // Disable the button to increase the wrong guess value
   disablePlusWrongButton() {
     return (this.wrongGuess >= this.codesLength);
+  }
+
+  // Check the code and update the database
+  checkCode() {
+    const newData = {
+      codeId: this.codes[0].getId(),
+      gameId: this.id,
+      values: this.codes[0].getStringValue(),
+      user: this.codes[0].getUser().getUsername(),
+      date: new Date(this.codes[0].getDate()).toISOString(),
+      correct: this.correctGuess,
+      wrong: this.wrongGuess,
+      checked: true
+    };
+    this.db.list('/codes').set(this.codes[0].getId(), newData);
   }
 }
 

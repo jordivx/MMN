@@ -24,5 +24,6 @@
     "Opponent Codes": "Codis del Oponent",
     "MaxGamesMessage": "No es poden tenir més de 10 partides",
     "WaitingFirstTurn": "Esperant que el rival esculli codi",
-    "Your Code": "Codi teu"
+    "Your Code": "Codi teu",
+    "Check Code": "Validar Codi"
 }

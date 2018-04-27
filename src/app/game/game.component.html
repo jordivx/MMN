@@ -39,7 +39,7 @@
           <table>
             <tr>
               <td>
-                <input type="button" class="quantityButton plus-button" (click)="increaseCorrectGuess()" [disabled]="disablePlusCorrectButton()">
+                <button class="quantityButton plus-button" (click)="increaseCorrectGuess();$event.preventDefault()" [disabled]="disablePlusCorrectButton()"></button>
               </td>
             </tr>
             <tr>
@@ -51,7 +51,7 @@
             </tr>
             <tr>
               <td>
-                <input type="button" class="quantityButton minus-button" (click)="decreaseCorrectGuess()" [disabled]="disableMinusCorrectButton()">
+                <button class="quantityButton minus-button" (click)="decreaseCorrectGuess();$event.preventDefault()" [disabled]="disableMinusCorrectButton()"></button>
               </td>
             </tr>
           </table>
@@ -60,7 +60,7 @@
           <table>
             <tr>
               <td>
-                <input type="button" class="quantityButton plus-button" (click)="increaseWrongGuess()" [disabled]="disablePlusWrongButton()">
+                <button class="quantityButton plus-button" (click)="increaseWrongGuess();$event.preventDefault()" [disabled]="disablePlusWrongButton()"></button>
               </td>
             </tr>
             <tr>
@@ -72,13 +72,13 @@
             </tr>
             <tr>
               <td>
-                <input type="button" class="quantityButton minus-button" (click)="decreaseWrongGuess()" [disabled]="disableMinusWrongButton()">
+                <button class="quantityButton minus-button" (click)="decreaseWrongGuess();$event.preventDefault()" [disabled]="disableMinusWrongButton()"></button>
               </td>
             </tr>
           </table>
         </td>
         <td>
-          <input type="button" value="VALIDAR">
+          <input type="button" class="btn btn-dark" (click)="checkCode()" value="{{ 'Check Code' | translate | uppercase }}">
         </td>
       </tr>
       <tr *ngIf="!myTurn">

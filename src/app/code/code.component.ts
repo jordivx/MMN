@@ -9,6 +9,7 @@ import { UserComponent } from '../user/user.component';
 })
 export class CodeComponent implements OnInit {
 
+  private id: string;
   @Input() public values: NumberComponent[];
   public codeValues: NumberComponent[] = new Array < NumberComponent > ();
   private user: UserComponent;
@@ -25,6 +26,14 @@ export class CodeComponent implements OnInit {
     this.values = _values;
     this.user = _user;
     this.date = _date;
+  }
+
+  getId() {
+    return this.id;
+  }
+
+  setId(_id: string) {
+    this.id = _id;
   }
 
   getValues() {
