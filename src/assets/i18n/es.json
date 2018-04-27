@@ -25,5 +25,6 @@
     "MaxGamesMessage": "No se pueden tener más de 10 partidas",
     "WaitingFirstTurn": "Esperando que el rival escoja código",
     "Your Code": "Tu Código",
-    "Check Code": "Validar Código"
+    "Check Code": "Validar Código",
+    "GuessesHigherThanCodeLength": "La suma de los correctos y los regulares no puede superar la longitud de los códigos"
 }

@@ -113,12 +113,12 @@
     </tr>
     <tr [hidden]="!seeMyCodes" *ngFor="let code of myCodes">
       <td>
-        <app-code [values]="code.values"></app-code>
+        <app-code [code]="code"></app-code>
       </td>
     </tr>
     <tr [hidden]="seeMyCodes" *ngFor="let code of opponentCodes">
       <td>
-        <app-code [values]="code.values"></app-code>
+        <app-code [code]="code"></app-code>
       </td>
     </tr>
   </table>

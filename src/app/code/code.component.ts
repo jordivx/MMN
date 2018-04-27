@@ -10,7 +10,8 @@ import { UserComponent } from '../user/user.component';
 export class CodeComponent implements OnInit {
 
   private id: string;
-  @Input() public values: NumberComponent[];
+  private values: NumberComponent[];
+  @Input() private code: CodeComponent[];
   public codeValues: NumberComponent[] = new Array < NumberComponent > ();
   private user: UserComponent;
   private date: Date;

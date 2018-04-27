@@ -30,6 +30,8 @@ import { UserService } from './user.service';
 import { LimitedCharactersDirective } from './limited-characters.directive';
 import { AuthGuard } from './auth.guard';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { SimpleNotificationsModule } from 'angular2-notifications';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -61,6 +63,7 @@ const firebaseAuth = {
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
@@ -74,7 +77,8 @@ const firebaseAuth = {
     }),
     AngularFireModule.initializeApp(firebaseAuth),
     AngularFireAuthModule,
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    SimpleNotificationsModule.forRoot()
   ],
   providers: [
     CodeService,

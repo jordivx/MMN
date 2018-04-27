@@ -8,6 +8,8 @@ import { SettingsService } from '../settings.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { UserService } from '../user.service';
+import { NotificationsService } from 'angular2-notifications';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-game',
@@ -47,7 +49,9 @@ export class GameComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private db: AngularFireDatabase,
-    private user: UserService) {
+    private user: UserService,
+    private notificationService: NotificationsService,
+    private translateService: TranslateService) {
 
     // Get the game id from the parameter
     this.id = this.route.snapshot.paramMap.get('id');
@@ -408,17 +412,25 @@ export class GameComponent implements OnInit {
 
   // Check the code and update the database
   checkCode() {
-    const newData = {
-      codeId: this.codes[0].getId(),
-      gameId: this.id,
-      values: this.codes[0].getStringValue(),
-      user: this.codes[0].getUser().getUsername(),
-      date: new Date(this.codes[0].getDate()).toISOString(),
-      correct: this.correctGuess,
-      wrong: this.wrongGuess,
-      checked: true
-    };
-    this.db.list('/codes').set(this.codes[0].getId(), newData);
+    if (this.correctGuess + this.wrongGuess > this.codesLength) {
+      this.translateService.get('GuessesHigherThanCodeLength').subscribe((res: string) => {
+        this.notificationService.warn(res);
+        return false;
+      });
+      console.log('The correct plus the wrong guesses cannot be higher than the codes length');
+    } else {
+      const newData = {
+        codeId: this.codes[0].getId(),
+        gameId: this.id,
+        values: this.codes[0].getStringValue(),
+        user: this.codes[0].getUser().getUsername(),
+        date: new Date(this.codes[0].getDate()).toISOString(),
+        correct: this.correctGuess,
+        wrong: this.wrongGuess,
+        checked: true
+      };
+      this.db.list('/codes').set(this.codes[0].getId(), newData);
+    }
   }
 }
 

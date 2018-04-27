@@ -9,6 +9,11 @@ import { SettingsService } from './settings.service';
 export class AppComponent {
   title = 'MMN';
 
+  public notificationOptions = {
+    timeOut: 3000,
+    lastOnBottom: true
+  };
+
   constructor(public settingsService: SettingsService) {
     settingsService.setCodeLength(5); // By default the codeLength will be 5
   }
