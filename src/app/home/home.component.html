@@ -1,4 +1,6 @@
 <div class="list-group">
   <a routerLink="/gameList" class="list-group-item list-group-item-action">{{ 'Game List' | translate | uppercase }}</a>
   <a routerLink="/settings" class="list-group-item list-group-item-action">{{ 'Settings' | translate | uppercase }}</a>
+  <a routerLink="/profile" class="list-group-item list-group-item-action">{{ 'Profile' | translate | uppercase }}</a>
+  <a routerLink="/" (click)="logout()" class="list-group-item list-group-item-action">{{ 'LogOut' | translate | uppercase }}</a>
 </div>

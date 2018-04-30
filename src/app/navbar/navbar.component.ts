@@ -1,4 +1,6 @@
+// Modules imports
 import { Component, OnInit } from '@angular/core';
+// Services imports
 import { UserService } from '../user.service';
 
 @Component({

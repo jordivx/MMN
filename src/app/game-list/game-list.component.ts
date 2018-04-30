@@ -1,15 +1,17 @@
+// Modules imports
 import { Component, OnInit } from '@angular/core';
 import { AngularFireDatabase } from 'angularfire2/database';
 import { Router } from '@angular/router';
 import { FirebaseOperation } from 'angularfire2/database/interfaces';
 import 'rxjs/add/operator/filter';
 import 'rxjs/add/operator/map';
-
+// Components imports
 import { GameComponent } from '../game/game.component';
 import { UserComponent } from '../user/user.component';
-
+// Services imports
 import { SettingsService } from '../settings.service';
 import { UserService } from '../user.service';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 @Component({
   selector: 'app-game-list',
@@ -35,9 +37,11 @@ export class GameListComponent implements OnInit {
   constructor(private db: AngularFireDatabase,
     private router: Router,
     public settingsService: SettingsService,
-    private user: UserService) {
+    private user: UserService,
+    private spinnerService: Ng4LoadingSpinnerService) {
 
     // Get the games from the database
+    this.spinnerService.show();
     this.gameListSubscription = this.db.list('/games').snapshotChanges().subscribe(
       data => {
         // Map the objects to have the uid and the data
@@ -81,7 +85,9 @@ export class GameListComponent implements OnInit {
           new Date(b.editDate).getTime() - new Date(a.editDate).getTime()
         );
         this.nFreeGames = this.freeGamesListData.length;
+        this.spinnerService.hide();
       }, error => {
+        this.spinnerService.hide();
         console.log(error);
       }
     );

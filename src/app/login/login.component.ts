@@ -1,8 +1,11 @@
+// Modules imports
 import { Component, OnInit } from '@angular/core';
-import { SettingsService } from '../settings.service';
 import { Router } from '@angular/router';
-import { UserService } from '../user.service';
 import { AngularFireAuth } from 'angularfire2/auth';
+// Services imports
+import { SettingsService } from '../settings.service';
+import { UserService } from '../user.service';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +20,8 @@ export class LoginComponent implements OnInit {
   constructor(public settingsService: SettingsService,
     private router: Router,
     private user: UserService,
-    private fire: AngularFireAuth) {
+    private fire: AngularFireAuth,
+    private spinnerService: Ng4LoadingSpinnerService) {
 
   }
 
@@ -28,11 +32,13 @@ export class LoginComponent implements OnInit {
   }
 
   loginUser() {
+    this.spinnerService.show();
     this.fire.auth.signInWithEmailAndPassword(this.username + '@mmn.mmn', this.password).then(
       data => {
         this.user.setIsUserLoggedIn(true, this.username);
         this.user.checkUserConnection().then(
           x => {
+            this.spinnerService.hide();
             this.router.navigate(['/']);
           }
         ).catch(err => {

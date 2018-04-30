@@ -1,12 +1,15 @@
 // tslint:disable:radix
+// Modules imports
 import { Component, OnInit, Input, ElementRef } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AngularFireDatabase } from 'angularfire2/database';
+// Components imports
 import { CodeComponent } from '../code/code.component';
 import { UserComponent } from '../user/user.component';
 import { NumberComponent } from '../number/number.component';
-import { FormGroup, FormBuilder } from '@angular/forms';
+// Services imports
 import { SettingsService } from '../settings.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { AngularFireDatabase } from 'angularfire2/database';
 import { UserService } from '../user.service';
 import { NotificationsService } from 'angular2-notifications';
 import { TranslateService } from '@ngx-translate/core';

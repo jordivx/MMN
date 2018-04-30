@@ -1,4 +1,6 @@
+// Modules imports
 import { Component, OnInit, Input } from '@angular/core';
+// Components imports
 import { NumberComponent } from '../number/number.component';
 import { UserComponent } from '../user/user.component';
 

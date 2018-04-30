@@ -1,6 +1,8 @@
+// Modules imports
 import { Component, OnInit } from '@angular/core';
-import { SettingsService } from '../settings.service';
 import { environment } from '../../environments/environment';
+// Services imports
+import { SettingsService } from '../settings.service';
 
 @Component({
   selector: 'app-settings',

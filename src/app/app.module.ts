@@ -7,12 +7,15 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AppRoutingModule } from './/app-routing.module';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { SimpleNotificationsModule } from 'angular2-notifications';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 
 
 import { AppComponent } from './app.component';
 import { NumberComponent } from './number/number.component';
 import { CodeComponent } from './code/code.component';
-import { CodeService } from './code.service';
 import { GameComponent } from './game/game.component';
 import { GameListComponent } from './game-list/game-list.component';
 import { UserComponent } from './user/user.component';
@@ -21,18 +24,16 @@ import { SettingsComponent } from './settings/settings.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { ProfileComponent } from './profile/profile.component';
 
 
 import { SettingsService } from './settings.service';
 import { UserService } from './user.service';
+import { CodeService } from './code.service';
 
 
 import { LimitedCharactersDirective } from './limited-characters.directive';
 import { AuthGuard } from './auth.guard';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
-import { SimpleNotificationsModule } from 'angular2-notifications';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ProfileComponent } from './profile/profile.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -80,7 +81,8 @@ const firebaseAuth = {
     AngularFireModule.initializeApp(firebaseAuth),
     AngularFireAuthModule,
     AngularFireDatabaseModule,
-    SimpleNotificationsModule.forRoot()
+    SimpleNotificationsModule.forRoot(),
+    Ng4LoadingSpinnerModule.forRoot()
   ],
   providers: [
     CodeService,

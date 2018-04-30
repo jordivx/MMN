@@ -1,8 +1,10 @@
+// Modules imports
 import { Component, OnInit } from '@angular/core';
-import { SettingsService } from '../settings.service';
 import { Router } from '@angular/router';
-import { UserService } from '../user.service';
 import { AngularFireAuth } from 'angularfire2/auth';
+// Services imports
+import { SettingsService } from '../settings.service';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'app-register',

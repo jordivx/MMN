@@ -1,4 +1,6 @@
+// Modules imports
 import { Component, OnInit } from '@angular/core';
+// Services imports
 import { UserService } from '../user.service';
 
 @Component({
@@ -8,9 +10,12 @@ import { UserService } from '../user.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private user: UserService) { }
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
   }
 
+  logout() {
+    this.userService.logout();
+  }
 }
