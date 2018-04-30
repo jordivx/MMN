@@ -20,6 +20,11 @@ import { UserService } from './services/user.service';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireModule } from 'angularfire2';
+import { ProfileComponent } from './components/profile/profile.component';
+import { SimpleNotificationsModule } from 'angular2-notifications';
+import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
+import { HelpDialogComponent } from './components/help-dialog/help-dialog.component';
+import { EndGameDialogComponent } from './components/end-game-dialog/end-game-dialog.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -50,7 +55,10 @@ describe('AppComponent', () => {
         HomeComponent,
         LoginComponent,
         RegisterComponent,
-        SettingsComponent
+        SettingsComponent,
+        ProfileComponent,
+        HelpDialogComponent,
+        EndGameDialogComponent
       ],
       imports: [
         AppRoutingModule,
@@ -66,7 +74,9 @@ describe('AppComponent', () => {
         HttpClientModule,
         AngularFireModule.initializeApp(firebaseAuth),
         AngularFireAuthModule,
-        AngularFireDatabaseModule
+        AngularFireDatabaseModule,
+        SimpleNotificationsModule.forRoot(),
+        Ng4LoadingSpinnerModule.forRoot()
       ],
       providers: [
         {provide: APP_BASE_HREF, useValue : '/' },
