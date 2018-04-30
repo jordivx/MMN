@@ -35,7 +35,7 @@ import { CodeService } from './services/code.service';
 
 
 import { LimitedCharactersDirective } from './directives/limited-characters.directive';
-import { AuthGuard } from './auth.guard';
+import { AuthGuard } from './guards/auth.guard';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);

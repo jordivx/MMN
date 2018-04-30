@@ -1,7 +1,7 @@
 import { TestBed, async, inject } from '@angular/core/testing';
 
 import { AuthGuard } from './auth.guard';
-import { UserService } from './services/user.service';
+import { UserService } from '../services/user.service';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireModule } from 'angularfire2';
 import { Router, RouterModule } from '@angular/router';
