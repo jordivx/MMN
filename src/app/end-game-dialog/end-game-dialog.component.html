@@ -1,0 +1,9 @@
+<div [@dialog] *ngIf="visible" class="dialog">
+  <h1>{{ title | translate | uppercase }}</h1>
+  <p>
+      {{ message | translate }}
+  </p>
+  <div align="center"><button (click)="close()" class="btn">{{ 'Close' | translate | uppercase }}</button></div>
+  <button *ngIf="closable" (click)="close()" aria-label="Close" class="dialog__close-btn">X</button>
+</div>
+<div *ngIf="visible" class="overlay" (click)="close()"></div>

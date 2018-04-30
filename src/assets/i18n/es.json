@@ -29,8 +29,12 @@
     "GuessesHigherThanCodeLength": "La suma de los correctos y los regulares no puede superar la longitud de los códigos",
     "Profile": "Perfil",
     "Won Games": "Partidas ganadas",
-    "Played Games": "Partidas jugadas",
+    "Total Games": "Partidas jugadas",
     "Opponent Guess": "Intento del oponente",
     "Help": "Ayuda",
-    "Close": "Cerrar"
+    "Close": "Cerrar",
+    "YouWonTitle": "GANADOR !",
+    "OpponentWonTitle": "PERDEDOR !",
+    "YouWonMessage": "Has acertado el código del oponente, has GANADO !",
+    "OpponentWonMessage": "El oponente ha encertado tu código, has PERDIDO !"
 }

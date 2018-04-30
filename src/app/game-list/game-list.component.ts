@@ -65,8 +65,9 @@ export class GameListComponent implements OnInit {
         // Filter the results by the current user to have the games associated with it.
         this.myGamesListData = this.gameListData.filter(
           (game: any) =>
-          game.user1 === this.user.getUsername() ||
-          game.user2 === this.user.getUsername()
+          (game.user1 === this.user.getUsername() ||
+          game.user2 === this.user.getUsername()) &&
+          game.finishDate === ''
         );
         // Sort "My Games List" by edit time to have the latest on the top
         this.myGamesListData.sort((a: any, b: any) =>
@@ -79,7 +80,8 @@ export class GameListComponent implements OnInit {
           (game.user1 === '' || game.user2 === '') &&
           game.user1 !== this.user.getUsername() &&
           game.user2 !== this.user.getUsername() &&
-          game.user1Code !== ''
+          game.user1Code !== '' &&
+          game.finishDate === ''
         );
         // Sort "Free Games List"  by edit time to have the latest on the top
         this.freeGamesListData.sort((a: any, b: any) =>

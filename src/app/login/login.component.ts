@@ -42,12 +42,14 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['/']);
           }
         ).catch(err => {
+          this.spinnerService.hide();
           console.log('User not logged');
         });
 
       }
     ).catch(
       error => {
+        this.spinnerService.hide();
         console.log(error);
       }
     );

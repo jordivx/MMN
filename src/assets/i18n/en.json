@@ -29,8 +29,12 @@
     "GuessesHigherThanCodeLength": "The sum of the correct and the regular can't be higher than the codes length",
     "Profile": "Profile",
     "Won Games": "Won games",
-    "Played Games": "Played games",
+    "Total Games": "Played games",
     "Opponent Guess": "Opponent Guess",
     "Help": "Help",
-    "Close": "Close"
+    "Close": "Close",
+    "YouWonTitle": "WINNER !",
+    "OpponentWonTitle": "LOSER !",
+    "YouWonMessage": "You have guessed your opponent's code, you've WON !",
+    "OpponentWonMessage": "The opponent has guessed your code, you've LOST !"
 }

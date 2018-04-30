@@ -433,12 +433,8 @@ export class GameComponent implements OnInit {
 
   // Check the code and update the database
   checkCode() {
-    if (this.correctGuess + this.wrongGuess > this.codesLength) {
-      this.translateService.get('GuessesHigherThanCodeLength').subscribe((res: string) => {
-        this.notificationService.warn(res);
-        return false;
-      });
-      console.log('The correct plus the wrong guesses cannot be higher than the codes length');
+    if (this.correctGuess === this.codesLength) {
+      this.finishGame();
     } else {
       const newCodeData = {
         codeId: this.codes[0].getId(),
@@ -452,6 +448,14 @@ export class GameComponent implements OnInit {
       };
       this.db.list('/codes').set(this.codes[0].getId(), newCodeData);
     }
+  }
+
+  finishGame() {
+    this.translateService.get('OpponentWonTitle').subscribe((resTitle: string) => {
+      this.translateService.get('OpponentWonMessage').subscribe((resContent: string) => {
+        this.settingsService.openEndGameDialog(this.id, resTitle, resContent);
+      });
+    });
   }
 }
 

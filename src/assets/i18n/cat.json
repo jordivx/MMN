@@ -29,8 +29,12 @@
     "GuessesHigherThanCodeLength": "La suma dels correctes i els regulars no pot superar la longitud dels codis",
     "Profile": "Perfil",
     "Won Games": "Partides guanyades",
-    "Played Games": "Partides jugades",
+    "Total Games": "Partides jugades",
     "Opponent Guess": "Intent del oponent",
     "Help": "Ajuda",
-    "Close": "Tancar"
+    "Close": "Tancar",
+    "YouWonTitle": "GUANYADOR !",
+    "OpponentWonTitle": "PERDEDOR !",
+    "YouWonMessage": "Has acertat el codi del oponent, has GUANYAT !",
+    "OpponentWonMessage": "L'oponent ha encertat el teu codi, has PERDUT !"
 }
