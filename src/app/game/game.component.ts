@@ -1,4 +1,3 @@
-// tslint:disable:radix
 // Modules imports
 import { Component, OnInit, Input, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';

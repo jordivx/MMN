@@ -10,10 +10,10 @@ export class LimitedCharactersDirective {
 
   constructor() { }
 
-  @Input('appLimitedCharacters') limitTo; 
+  @Input('appLimitedCharacters') limitTo;
   _onKeypress(e) {
      const limit = +this.limitTo;
-     if (e.target.value.length === limit) e.preventDefault();
+     if (e.target.value.length === limit) { e.preventDefault(); }
   }
 
 }
