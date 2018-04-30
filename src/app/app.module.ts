@@ -32,7 +32,7 @@ import { UserService } from './user.service';
 import { CodeService } from './code.service';
 
 
-import { LimitedCharactersDirective } from './limited-characters.directive';
+import { LimitedCharactersDirective } from './directives/limited-characters.directive';
 import { AuthGuard } from './auth.guard';
 import { HelpDialogComponent } from './help-dialog/help-dialog.component';
 import { EndGameDialogComponent } from './end-game-dialog/end-game-dialog.component';
