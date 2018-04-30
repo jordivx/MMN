@@ -9,8 +9,8 @@ import 'rxjs/add/operator/map';
 import { GameComponent } from '../game/game.component';
 import { UserComponent } from '../user/user.component';
 // Services imports
-import { SettingsService } from '../settings.service';
-import { UserService } from '../user.service';
+import { SettingsService } from '../../services/settings.service';
+import { UserService } from '../../services/user.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 @Component({

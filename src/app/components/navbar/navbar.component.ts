@@ -1,8 +1,8 @@
 // Modules imports
 import { Component, OnInit } from '@angular/core';
 // Services imports
-import { UserService } from '../user.service';
-import { SettingsService } from '../settings.service';
+import { UserService } from '../../services/user.service';
+import { SettingsService } from '../../services/settings.service';
 
 @Component({
   selector: 'app-navbar',

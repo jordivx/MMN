@@ -8,8 +8,8 @@ import { CodeComponent } from '../code/code.component';
 import { UserComponent } from '../user/user.component';
 import { NumberComponent } from '../number/number.component';
 // Services imports
-import { SettingsService } from '../settings.service';
-import { UserService } from '../user.service';
+import { SettingsService } from '../../services/settings.service';
+import { UserService } from '../../services/user.service';
 import { NotificationsService } from 'angular2-notifications';
 import { TranslateService } from '@ngx-translate/core';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';

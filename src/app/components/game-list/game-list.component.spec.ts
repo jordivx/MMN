@@ -8,8 +8,8 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { RouterTestingModule } from '@angular/router/testing';
-import { SettingsService } from '../settings.service';
-import { UserService } from '../user.service';
+import { SettingsService } from '../../services/settings.service';
+import { UserService } from '../../services/user.service';
 import { ReactiveFormsModule } from '@angular/forms';
 
 export function HttpLoaderFactory(http: HttpClient) {

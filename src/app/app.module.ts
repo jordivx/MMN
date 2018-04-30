@@ -29,9 +29,9 @@ import { HelpDialogComponent } from './components/help-dialog/help-dialog.compon
 import { EndGameDialogComponent } from './components/end-game-dialog/end-game-dialog.component';
 
 
-import { SettingsService } from './settings.service';
-import { UserService } from './user.service';
-import { CodeService } from './code.service';
+import { SettingsService } from './services/settings.service';
+import { UserService } from './services/user.service';
+import { CodeService } from './services/code.service';
 
 
 import { LimitedCharactersDirective } from './directives/limited-characters.directive';

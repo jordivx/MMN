@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from 'angularfire2/auth';
 // Services imports
-import { SettingsService } from '../settings.service';
-import { UserService } from '../user.service';
+import { SettingsService } from '../../services/settings.service';
+import { UserService } from '../../services/user.service';
 import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 @Component({

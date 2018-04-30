@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, OnChanges, EventEmitter } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { Router } from '@angular/router';
-import { SettingsService } from '../settings.service';
+import { SettingsService } from '../../services/settings.service';
 
 @Component({
   selector: 'app-end-game-dialog',

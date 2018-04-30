@@ -7,8 +7,8 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { CodeComponent } from '../code/code.component';
 import { NumberComponent } from '../number/number.component';
-import { SettingsService } from '../settings.service';
-import { AppRoutingModule } from '../app-routing.module';
+import { SettingsService } from '../../services/settings.service';
+import { AppRoutingModule } from '../../app-routing.module';
 import { HomeComponent } from '../home/home.component';
 import { LoginComponent } from '../login/login.component';
 import { RegisterComponent } from '../register/register.component';
@@ -18,7 +18,7 @@ import { APP_BASE_HREF } from '@angular/common';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireModule } from 'angularfire2';
-import { UserService } from '../user.service';
+import { UserService } from '../../services/user.service';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
