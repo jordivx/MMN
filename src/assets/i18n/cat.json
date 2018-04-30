@@ -29,5 +29,8 @@
     "GuessesHigherThanCodeLength": "La suma dels correctes i els regulars no pot superar la longitud dels codis",
     "Profile": "Perfil",
     "Won Games": "Partides guanyades",
-    "Played Games": "Partides jugades"
+    "Played Games": "Partides jugades",
+    "Opponent Guess": "Intent del oponent",
+    "Help": "Ajuda",
+    "Close": "Tancar"
 }

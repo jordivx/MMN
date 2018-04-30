@@ -15,6 +15,6 @@ export class AppComponent {
   };
 
   constructor(public settingsService: SettingsService) {
-    settingsService.setCodeLength(5); // By default the codeLength will be 5
+    settingsService.setCodeLength(+localStorage.getItem('codeLength'));
   }
 }

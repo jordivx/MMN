@@ -29,5 +29,8 @@
     "GuessesHigherThanCodeLength": "The sum of the correct and the regular can't be higher than the codes length",
     "Profile": "Profile",
     "Won Games": "Won games",
-    "Played Games": "Played games"
+    "Played Games": "Played games",
+    "Opponent Guess": "Opponent Guess",
+    "Help": "Help",
+    "Close": "Close"
 }

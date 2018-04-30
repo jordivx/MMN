@@ -12,6 +12,7 @@ import { SettingsService } from '../settings.service';
 import { UserService } from '../user.service';
 import { NotificationsService } from 'angular2-notifications';
 import { TranslateService } from '@ngx-translate/core';
+import { Ng4LoadingSpinnerService } from 'ng4-loading-spinner';
 
 @Component({
   selector: 'app-game',
@@ -53,7 +54,8 @@ export class GameComponent implements OnInit {
     private db: AngularFireDatabase,
     private user: UserService,
     private notificationService: NotificationsService,
-    private translateService: TranslateService) {
+    private translateService: TranslateService,
+    private spinnerService: Ng4LoadingSpinnerService) {
 
     // Get the game id from the parameter
     this.id = this.route.snapshot.paramMap.get('id');
@@ -63,7 +65,7 @@ export class GameComponent implements OnInit {
       console.log('Invalid game\'s id.');
       this.router.navigate(['/gameList']);
     }
-
+    this.spinnerService.show();
     // Get the game data from database
     this.db.object('/games/' + this.id).valueChanges().subscribe(
       (game: any) => {
@@ -92,6 +94,10 @@ export class GameComponent implements OnInit {
         // Initialize the code forms empty with the correct positions
         this.resetInputCodeFormFields();
         this.resetMyCodeFormFields();
+        this.spinnerService.hide();
+      }, error => {
+        this.spinnerService.hide();
+        console.log(error);
       }
     );
   }
@@ -387,9 +393,9 @@ export class GameComponent implements OnInit {
     this.correctGuess++;
   }
 
-  // Disable the button to increase the correct guess value
-  disablePlusCorrectButton() {
-    return (this.correctGuess >= this.codesLength);
+  // Disable the button to increase both the correct and the wrong guess value
+  disablePlusButton() {
+    return (this.correctGuess + this.wrongGuess >= this.codesLength);
   }
 
   // Function to decrease the wrong guess variable
@@ -405,11 +411,6 @@ export class GameComponent implements OnInit {
   // Function to increase the wrong guess variable
   increaseWrongGuess() {
     this.wrongGuess++;
-  }
-
-  // Disable the button to increase the wrong guess value
-  disablePlusWrongButton() {
-    return (this.wrongGuess >= this.codesLength);
   }
 
   // Check the code and update the database

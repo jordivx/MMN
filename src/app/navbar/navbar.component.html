@@ -16,6 +16,9 @@
         <a class="nav-link" routerLink="/profile">{{ 'Profile' | translate }}</a>
       </li>
       <li class="nav-item">
+        <a class="nav-link" (click)="settingsService.openHelpDialog()" style="cursor: pointer;">{{ 'Help' | translate }}</a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" (click)="logout()"  routerLink="/">{{ 'LogOut' | translate }}</a>
       </li>
     </ul>

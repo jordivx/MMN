@@ -34,6 +34,7 @@ import { CodeService } from './code.service';
 
 import { LimitedCharactersDirective } from './limited-characters.directive';
 import { AuthGuard } from './auth.guard';
+import { HelpDialogComponent } from './help-dialog/help-dialog.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -62,7 +63,8 @@ const firebaseAuth = {
     HomeComponent,
     LoginComponent,
     RegisterComponent,
-    ProfileComponent
+    ProfileComponent,
+    HelpDialogComponent
   ],
   imports: [
     BrowserModule,

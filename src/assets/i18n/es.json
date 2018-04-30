@@ -29,5 +29,8 @@
     "GuessesHigherThanCodeLength": "La suma de los correctos y los regulares no puede superar la longitud de los códigos",
     "Profile": "Perfil",
     "Won Games": "Partidas ganadas",
-    "Played Games": "Partidas jugadas"
+    "Played Games": "Partidas jugadas",
+    "Opponent Guess": "Intento del oponente",
+    "Help": "Ayuda",
+    "Close": "Cerrar"
 }
