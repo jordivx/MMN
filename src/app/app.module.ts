@@ -14,17 +14,19 @@ import { Ng4LoadingSpinnerModule } from 'ng4-loading-spinner';
 
 
 import { AppComponent } from './app.component';
-import { NumberComponent } from './number/number.component';
-import { CodeComponent } from './code/code.component';
-import { GameComponent } from './game/game.component';
-import { GameListComponent } from './game-list/game-list.component';
-import { UserComponent } from './user/user.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { SettingsComponent } from './settings/settings.component';
-import { HomeComponent } from './home/home.component';
-import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
-import { ProfileComponent } from './profile/profile.component';
+import { NumberComponent } from './components/number/number.component';
+import { CodeComponent } from './components/code/code.component';
+import { GameComponent } from './components/game/game.component';
+import { GameListComponent } from './components/game-list/game-list.component';
+import { UserComponent } from './components/user/user.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { SettingsComponent } from './components/settings/settings.component';
+import { HomeComponent } from './components/home/home.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { HelpDialogComponent } from './components/help-dialog/help-dialog.component';
+import { EndGameDialogComponent } from './components/end-game-dialog/end-game-dialog.component';
 
 
 import { SettingsService } from './settings.service';
@@ -34,8 +36,6 @@ import { CodeService } from './code.service';
 
 import { LimitedCharactersDirective } from './directives/limited-characters.directive';
 import { AuthGuard } from './auth.guard';
-import { HelpDialogComponent } from './help-dialog/help-dialog.component';
-import { EndGameDialogComponent } from './end-game-dialog/end-game-dialog.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
