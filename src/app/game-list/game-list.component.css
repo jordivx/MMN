@@ -16,6 +16,10 @@
     cursor: pointer;
 }
 
+.myTurn {
+    background-color: #65afff;
+}
+
 .playButton {
     text-decoration: underline;
     font-weight: bold;

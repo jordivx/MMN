@@ -58,7 +58,8 @@ export class GameListComponent implements OnInit {
             startDate: objectData.startDate,
             editDate: objectData.editDate,
             finishDate: objectData.finishDate,
-            codesLength: objectData.codesLength
+            codesLength: objectData.codesLength,
+            myTurn: (objectData.turnUsername === this.user.getUsername())
           });
         });
         // Filter the results by the current user to have the games associated with it.

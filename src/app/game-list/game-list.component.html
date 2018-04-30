@@ -17,7 +17,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let myGame of myGamesListData" class="game" (click)="openGame(myGame.id)">
+      <tr *ngFor="let myGame of myGamesListData" [ngClass]="(myGame.myTurn)?'myTurn game':'game'" class="game" (click)="openGame(myGame.id)">
         <td>{{myGame.user1}}</td>
         <td>{{myGame.user2}}</td>
         <td class="playButton">{{ 'Play' | translate | uppercase}}</td>

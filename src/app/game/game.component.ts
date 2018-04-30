@@ -213,7 +213,8 @@ export class GameComponent implements OnInit {
       startDate: this.startDate,
       editDate: new Date().toISOString(),
       finishDate: '',
-      codesLength: this.codesLength
+      codesLength: this.codesLength,
+      turnUsername: ''
     };
 
     // Obtain the user input parsed to a number
@@ -225,6 +226,7 @@ export class GameComponent implements OnInit {
     } else {
       if (this.user2.getUsername() === this.user.getUsername()) {
         newData.user2Code = codeValues;
+        newData.turnUsername = this.user1.getUsername();
       }
     }
 
@@ -274,6 +276,22 @@ export class GameComponent implements OnInit {
         checked: false
       });
     });
+    let turnUsernameVar = this.user1.getUsername();
+    if (this.user.getUsername() === this.user1.getUsername()) {
+      turnUsernameVar = this.user2.getUsername();
+    }
+    const newGameData = {
+      user1: this.user1.getUsername(),
+      user2: this.user2.getUsername(),
+      user1Code: this.user1Code,
+      user2Code: this.user2Code,
+      startDate: this.startDate,
+      editDate: new Date().toISOString(),
+      finishDate: '',
+      codesLength: this.codesLength,
+      turnUsername: turnUsernameVar
+    };
+    this.db.list('/games').set(this.id, newGameData);
   }
 
   // Having the game id, get the codes from database, parse them into code objects and move them to the scope
@@ -422,7 +440,7 @@ export class GameComponent implements OnInit {
       });
       console.log('The correct plus the wrong guesses cannot be higher than the codes length');
     } else {
-      const newData = {
+      const newCodeData = {
         codeId: this.codes[0].getId(),
         gameId: this.id,
         values: this.codes[0].getStringValue(),
@@ -432,7 +450,7 @@ export class GameComponent implements OnInit {
         wrong: this.wrongGuess,
         checked: true
       };
-      this.db.list('/codes').set(this.codes[0].getId(), newData);
+      this.db.list('/codes').set(this.codes[0].getId(), newCodeData);
     }
   }
 }
